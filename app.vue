@@ -5,7 +5,7 @@
       <!-- <AuthWrapper > -->
         <v-container>
 
-          <NavBar />
+          <Navbar />
           <NuxtPage />
         </v-container>
       <!-- </AuthWrapper> -->
@@ -14,12 +14,5 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from './navbar.vue';
-const router = useRouter()
-
-const nav = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-]
 
 </script>
