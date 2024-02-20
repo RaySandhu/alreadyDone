@@ -24,7 +24,7 @@ const lightTheme = {
   };
 
 export default defineNuxtPlugin((app) => {
-    // add themes here using tips from https://vuetifyjs.com/en/features/global-configuration/#contextual-defaults
+    // add themes here using tips from https://vuetifyjs.com/en/features/global-configuration/#contextual-defaults!
   const vuetify = createVuetify({
     theme: {
         defaultTheme: "lightTheme",
