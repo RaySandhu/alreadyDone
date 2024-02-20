@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-const { data } = await useFetch('/api/example')
+// const { data } = await useFetch('/api/example')
+const { data } = await useFetch('/api/sampleGet')
 
 const printData = () => {
-    console.log(data.value)
+    console.log(data.value.data)
 }
 
 </script>
