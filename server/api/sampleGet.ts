@@ -1,7 +1,7 @@
 async function getPosts() {
   const connection = await dbConnect();
   try {
-    const [results] = await connection.query('SELECT * FROM posts');
+    const [results] = await connection.query('SELECT * FROM Household');
     return results;
   } catch (err) {
     console.error('Error:', err);
