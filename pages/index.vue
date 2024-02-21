@@ -1,36 +1,63 @@
 <template>
     <div>
-        <h2 style="background-color: blue;">
-            Index Content
+        <h2 style=" margin-top: 10px; margin-bottom: 10px;">
+            Get testing
         </h2>
-        <v-btn @click="printHouseholds()">
-            Get All Households
-        </v-btn>
-        <v-btn @click="printUsers()">
-            Get All Users
-        </v-btn>
-        <v-btn @click="printFood()">
-            Get All Food
-        </v-btn>
-        <v-btn @click="printRewards()">
-            Get All Rewards
-        </v-btn>
-        <v-btn @click="printTrash()">
-            Get All Trash
-        </v-btn>
+        <div>
+            <v-btn @click="printHouseholds()">
+                Get All Households
+            </v-btn>
+            <v-btn @click="printUsers()">
+                Get All Users
+            </v-btn>
+            <v-btn @click="printFood()">
+                Get All Food
+            </v-btn>
+            <v-btn @click="printRewards()">
+                Get All Rewards
+            </v-btn>
+            <v-btn @click="printTrash()">
+                Get All Trash
+            </v-btn>
+        </div>
+        <div style="margin-top: 10px;">
+            <v-btn>
+                Get Specific Household (Incomplete)
+            </v-btn>
+        </div>
+        <h2 style=" margin-top: 30px; margin-bottom: 10px;">
+            Post testing
+        </h2>
+        <div style="margin-top: 10px;">
+            <v-btn @click="testCreateHoushold()">
+                Create Household
+            </v-btn>
+        </div>
     </div>
+
 </template>
 
 <script setup lang="ts">
 // const { data } = await useFetch('/api/example')
-const { data : householdData } = await useFetch('/api/household', {method : 'get'})
+const householdData = ref();
+// const userData = ref(null);
+// const foodData = ref(null);
+// const rewardsData = ref(null);
+// const trashData = ref(null);
+
+// Note to self: looking to make data reactive once data has been updated. Likely solution is refresh page or rerun get requests after any update
+const fetchHouseholdData = async () => {
+    const response = await useFetch('/api/household', {method : 'get'});
+    householdData.value = response.data.value
+};
 const { data : userData } = await useFetch('/api/user', {method : 'get'})
 const { data : foodData } = await useFetch('/api/food', {method : 'get'})
 const { data : rewardsData } = await useFetch('/api/rewards', {method : 'get'})
 const { data : trashData } = await useFetch('/api/trashBin', {method : 'get'})
 
 const printHouseholds = () => {
-    console.log(householdData.value!.data)
+    fetchHouseholdData()
+    console.log(householdData.value)
 }
 const printUsers = () => {
     console.log(userData.value!.data)
@@ -46,10 +73,11 @@ const printTrash = () => {
 }
 
 async function testCreateHoushold() {
-  const { body } = await useFetch('/api/household', {
+  const { body } = await $fetch('/api/household', {
     method: 'post',
     body: { test: 123 }
   })
+  console.log(body)
 }
 
 </script>
