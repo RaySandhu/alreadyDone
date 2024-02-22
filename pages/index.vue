@@ -46,73 +46,28 @@
 </template>
 
 <script setup lang="ts">
-const householdData = ref();
-const userData = ref();
-const foodData = ref();
-const rewardsData = ref();
-const trashData = ref();
-
-const fetchHouseholdData = async () => {
-    const response = await $fetch('/api/household/0');
-    householdData.value = response
-};
-const fetchUserData = async () => {
-    const response = await $fetch('/api/user', {method : 'get'});
-    userData.value = response
-};
-const fetchFoodData = async () => {
-    const response = await $fetch('/api/food', {method : 'get'});
-    foodData.value = response
-};
-const fetchRewardsData = async () => {
-    const response = await $fetch('/api/rewards', {method : 'get'});
-    rewardsData.value = response
-};
-const fetchTrashData = async () => {
-    const response = await $fetch('/api/trashBin', {method : 'get'});
-    trashData.value = response
-};
+// calling this at the start of our application can cache all the data we will query to make things faster.
+await refreshData()
 
 const printHouseholds = async () => {
-    await fetchHouseholdData()
+    // await fetchHouseholdData()
     console.log(householdData.value.data)
 }
 const printUsers = async () => {
-    await fetchUserData()
+    // await fetchUserData()
     console.log(userData.value!.data)
 }
 const printFood = async () => {
-    await fetchFoodData()
+    // await fetchFoodData()
     console.log(foodData.value!.data)
 }
 const printRewards = async () => {
-    await fetchRewardsData()
+    // await fetchRewardsData()
     console.log(rewardsData.value!.data)
 }
 const printTrash = async () => {
-    await fetchTrashData()
+    // await fetchTrashData()
     console.log(trashData.value!.data)
-}
-
-const getSpecificHH = async (id : number) => {
-    const response = await $fetch(`/api/household/${id}`);
-    householdData.value = response
-    console.log(householdData.value)
-}
-
-async function createHousehold() {
-  const res = await $fetch('/api/household/create', {
-    method: 'post',
-    body: {}
-  })
-  console.log(res)
-}
-
-async function deleteHousehold(id : number) {
-  const res = await $fetch(`/api/household/${id}`, {
-    method: 'delete',
-  })
-  console.log(res)
 }
 
 </script>

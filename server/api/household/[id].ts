@@ -26,10 +26,10 @@ async function deleteHousehold (id: number) {
     const params: number[] = [id];
 
     const [results] = await connection.query(sql,params)
-
-    // if (results.affectedRows === 0) {
-    //   throw createError({ statusCode: 404, message: 'Household not found' });
-    // }
+    // @ts-ignore
+    if (results.affectedRows === 0) {
+      throw createError({ statusCode: 404, message: 'Household not found' });
+    }
     return results
   } catch (err) {
     console.error ('Error : ', err)
