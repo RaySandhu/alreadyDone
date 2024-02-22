@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  modules: [
+  modules: ['@sidebase/nuxt-auth',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -16,6 +16,15 @@ export default defineNuxtConfig({
       })
     },
   ],
+  auth: {
+    enableGlobalAppMiddleware: true,
+  },
+  runtimeConfig: {
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    public: {
+      GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    },
+  },
   css: ['@mdi/font/css/materialdesignicons.min.css'],
   vite: {
     vue: {
