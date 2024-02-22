@@ -24,6 +24,9 @@
             <v-btn @click="getSpecificHousehold(5)">
                 Get Specific Household - 1
             </v-btn>
+            <v-btn @click="getSpecificUser(5,5)">
+                    Get Specific User - 5, 5
+            </v-btn>
         </div>
         <h2 style=" margin-top: 30px; margin-bottom: 10px;">
             Post testing

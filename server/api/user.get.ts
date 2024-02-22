@@ -1,4 +1,4 @@
-async function getUsers() {
+async function getAllUsers() {
     const connection = await dbConnect();
     try {
       const [results] = await connection.query('SELECT * FROM Users');
@@ -13,7 +13,7 @@ async function getUsers() {
   
   export default defineEventHandler(async (event) => {
     try {
-      const posts = await getUsers();
+      const posts = await getAllUsers();
       return { data: posts };
     } catch (error:any) {
       console.error(error); 

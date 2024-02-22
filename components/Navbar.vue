@@ -3,8 +3,8 @@
         <h1>
             NavBar here I am
         </h1>
-        <v-btn>
-            Sample V button
+        <v-btn @click="refreshData()">
+            Refresh All Data
         </v-btn>
     </div>
 

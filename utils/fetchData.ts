@@ -26,9 +26,11 @@ export const fetchTrashData = async () => {
 };
 
 export const refreshData = async () => {
+    console.log('Refreshing Data...')
     await fetchHouseholdData()
     await fetchUserData()
     await fetchFoodData()
     await fetchRewardsData()
     await fetchTrashData()
+    console.log('Refresh complete!')
 }
