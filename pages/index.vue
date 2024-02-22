@@ -21,16 +21,24 @@
             </v-btn>
         </div>
         <div style="margin-top: 10px;">
-            <v-btn>
-                Get Specific Household (Incomplete)
+            <v-btn @click="getSpecificHH(1)">
+                Get Specific Household - 1
             </v-btn>
         </div>
         <h2 style=" margin-top: 30px; margin-bottom: 10px;">
             Post testing
         </h2>
         <div style="margin-top: 10px;">
-            <v-btn @click="testCreateHoushold()">
+            <v-btn @click="createHousehold()">
                 Create Household
+            </v-btn>
+        </div>
+        <h2 style=" margin-top: 30px; margin-bottom: 10px;">
+            Delete testing
+        </h2>
+        <div style="margin-top: 10px;">
+            <v-btn @click="deleteHousehold(1)">
+                Delete Household
             </v-btn>
         </div>
     </div>
@@ -38,46 +46,73 @@
 </template>
 
 <script setup lang="ts">
-// const { data } = await useFetch('/api/example')
 const householdData = ref();
-// const userData = ref(null);
-// const foodData = ref(null);
-// const rewardsData = ref(null);
-// const trashData = ref(null);
+const userData = ref();
+const foodData = ref();
+const rewardsData = ref();
+const trashData = ref();
 
-// Note to self: looking to make data reactive once data has been updated. Likely solution is refresh page or rerun get requests after any update
 const fetchHouseholdData = async () => {
-    const response = await useFetch('/api/household', {method : 'get'});
-    householdData.value = response.data.value
+    const response = await $fetch('/api/household/0');
+    householdData.value = response
 };
-const { data : userData } = await useFetch('/api/user', {method : 'get'})
-const { data : foodData } = await useFetch('/api/food', {method : 'get'})
-const { data : rewardsData } = await useFetch('/api/rewards', {method : 'get'})
-const { data : trashData } = await useFetch('/api/trashBin', {method : 'get'})
+const fetchUserData = async () => {
+    const response = await $fetch('/api/user', {method : 'get'});
+    userData.value = response
+};
+const fetchFoodData = async () => {
+    const response = await $fetch('/api/food', {method : 'get'});
+    foodData.value = response
+};
+const fetchRewardsData = async () => {
+    const response = await $fetch('/api/rewards', {method : 'get'});
+    rewardsData.value = response
+};
+const fetchTrashData = async () => {
+    const response = await $fetch('/api/trashBin', {method : 'get'});
+    trashData.value = response
+};
 
-const printHouseholds = () => {
-    fetchHouseholdData()
-    console.log(householdData.value)
+const printHouseholds = async () => {
+    await fetchHouseholdData()
+    console.log(householdData.value.data)
 }
-const printUsers = () => {
+const printUsers = async () => {
+    await fetchUserData()
     console.log(userData.value!.data)
 }
-const printFood = () => {
+const printFood = async () => {
+    await fetchFoodData()
     console.log(foodData.value!.data)
 }
-const printRewards = () => {
+const printRewards = async () => {
+    await fetchRewardsData()
     console.log(rewardsData.value!.data)
 }
-const printTrash = () => {
+const printTrash = async () => {
+    await fetchTrashData()
     console.log(trashData.value!.data)
 }
 
-async function testCreateHoushold() {
-  const { body } = await $fetch('/api/household', {
+const getSpecificHH = async (id : number) => {
+    const response = await $fetch(`/api/household/${id}`);
+    householdData.value = response
+    console.log(householdData.value)
+}
+
+async function createHousehold() {
+  const res = await $fetch('/api/household/create', {
     method: 'post',
-    body: { test: 123 }
+    body: {}
   })
-  console.log(body)
+  console.log(res)
+}
+
+async function deleteHousehold(id : number) {
+  const res = await $fetch(`/api/household/${id}`, {
+    method: 'delete',
+  })
+  console.log(res)
 }
 
 </script>
