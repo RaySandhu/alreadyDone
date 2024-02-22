@@ -6,8 +6,10 @@ export async function createHousehold() {
     console.log(res)
   }
 
-export const getSpecificHH = async (id : number) => {
-    const response = await $fetch(`/api/household/${id}`);
+export const getSpecificHousehold = async (id : number) => {
+    const response = await $fetch(`/api/household/${id}`, {
+      method: 'get'
+    });
     // @ts-ignore
     if (response.data.length === 0) {
         console.log('This household does not exist in our records.')

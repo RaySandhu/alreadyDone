@@ -21,7 +21,7 @@
             </v-btn>
         </div>
         <div style="margin-top: 10px;">
-            <v-btn @click="getSpecificHH(1)">
+            <v-btn @click="getSpecificHousehold(5)">
                 Get Specific Household - 1
             </v-btn>
         </div>
@@ -32,12 +32,16 @@
             <v-btn @click="createHousehold()">
                 Create Household
             </v-btn>
+            <v-btn @click="createUser('Ray', 'Sandhu', new Date('1998-06-25'), 'TestGoogle', 'P', 5)">
+                Create User
+            </v-btn>
+            
         </div>
         <h2 style=" margin-top: 30px; margin-bottom: 10px;">
             Delete testing
         </h2>
         <div style="margin-top: 10px;">
-            <v-btn @click="deleteHousehold(1)">
+            <v-btn @click="deleteHousehold(2)">
                 Delete Household
             </v-btn>
         </div>
