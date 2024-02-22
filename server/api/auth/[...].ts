@@ -5,10 +5,10 @@ import GoogleProvider from 'next-auth/providers/google'
 const runtimeConfig = useRuntimeConfig();
 
 export default NuxtAuthHandler({
-    //pages: {
+    pages: {
         // Change the default behavior to use `/login` as the path for the sign-in page
-        //signIn: '/login',
-     // },
+        signIn: '/login',
+    },
     providers: [
         // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
         GoogleProvider.default({

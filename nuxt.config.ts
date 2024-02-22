@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   ],
   auth: {
-    enableGlobalAppMiddleware: true,
+    globalAppMiddleware: true,
   },
   runtimeConfig: {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
