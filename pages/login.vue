@@ -1,18 +1,19 @@
 <script setup lang="ts">
     const { signIn } = useAuth()
 
-    definePageMeta({
-  auth: {
-    unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/dashboard',
-  },
+  definePageMeta({
+    layout: false,
+    auth: {
+      unauthenticatedOnly: true,
+      navigateAuthenticatedTo: '/dashboard',
+    },
 })
 </script>
 
 <template>
     <div class="div">
         <img class="already-done-logo" alt="Already done logo" src="/img/logo.png" />
-        <div class="text-wrapper">Already Done</div>
+        <div class="text-wrapper font-museoModerno">Already Done</div>
         <button class="text-wrapper-2 rectangle" @click="signIn('google')">Sign In With Google</button>
     </div>
   </template>
@@ -25,13 +26,14 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%
+    height: 100vh;
+    overflow: hidden;
 }
 
 .already-done-logo {
-  height: 15%;
+  height: min(20vh, 20vw);
   object-fit:scale-down;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 5%;
 }
 
@@ -47,7 +49,7 @@
   background-color: #fff;
   border-radius: 30px;
   padding: 20px;
-  margin-top: 5%;
+  margin-top: 10vh;
   margin-bottom: 10%;
 }
 

@@ -8,7 +8,10 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  modules: ['@sidebase/nuxt-auth',
+  modules: [
+    '@sidebase/nuxt-auth', 
+    '@nuxtjs/tailwindcss',
+    'nuxt-icons',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -25,7 +28,9 @@ export default defineNuxtConfig({
       GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     },
   },
-  css: ['@mdi/font/css/materialdesignicons.min.css'],
+  css: [
+    '@mdi/font/css/materialdesignicons.min.css',
+    '@/assets/css/main.css',],
   vite: {
     vue: {
       template: {
