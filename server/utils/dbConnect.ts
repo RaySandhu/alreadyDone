@@ -8,3 +8,14 @@ export default function createDbConnection() {
       database: process.env.DB_NAME,
     });
   }
+
+export interface User {
+    'User-ID' : number | null,
+    'FName': String,
+    'LName': String,
+    'DOB': Date,
+    'Points earned': number,
+    'Google Auth': String,
+    'PorC-Flag': String,
+    'H-ID': number
+}

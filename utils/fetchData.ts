@@ -9,7 +9,7 @@ export const fetchHouseholdData = async () => {
     householdData.value = response
 };
 export const fetchUserData = async () => {
-    const response = await $fetch('/api/user', {method : 'get'});
+    const response = await $fetch('/api/users/query?uID=0&hID=5', {method : 'get'}); // change this to hID accepting the logged in h-ID
     userData.value = response
 };
 export const fetchFoodData = async () => {
