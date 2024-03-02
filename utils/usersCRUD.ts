@@ -47,7 +47,7 @@ export const getUsers = async (hID : number,uID : number = 0) => {
 }
 
 export async function deleteUser(uID : number) {
-    const res = await $fetch(`/api/users/query?uID=${uID}`, {
+    const res = await $fetch(`/api/users/query?uID=${uID}&hID=0`, {
       method: 'delete',
     })
     console.log(res)

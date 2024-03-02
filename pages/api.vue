@@ -4,7 +4,7 @@
                 Refresh Cached Data
             </v-btn>
         <h2 style=" margin-top: 10px; margin-bottom: 10px;">
-            Get testing
+            Get testing for household 5
         </h2>
         <div>
             <v-btn @click="printHouseholds()">
@@ -43,11 +43,17 @@
             </v-btn>
             <v-btn @click="createUser(testCreateUser)">
                 Create User
-            </v-btn>            
+            </v-btn>
+            <v-btn @click="createFood(testCreateFood)">
+                Create Food
+            </v-btn>
         </div>
         <div>
             <v-btn @click="updateUser(testUpdateUser)">
                 Update User
+            </v-btn>
+            <v-btn @click="updateFood(testUpdateFood)">
+                Update Food
             </v-btn>
         </div>
         <h2 style=" margin-top: 30px; margin-bottom: 10px;">
@@ -55,7 +61,13 @@
         </h2>
         <div style="margin-top: 10px;">
             <v-btn @click="deleteHousehold(2)">
-                Delete Household
+                Delete Household - 2
+            </v-btn>
+            <v-btn @click="deleteUser(2)">
+                Delete User - 2
+            </v-btn>
+            <v-btn @click="deleteFood(21)">
+                Delete Food - 21
             </v-btn>
         </div>
     </div>
@@ -87,6 +99,22 @@ const testUpdateUser:User = {
     'Google Auth'   : 'TestGoogle',
     'PorC-Flag'     : 'P',
     'H-ID'          : 5,
+}
+
+const testCreateFood : Food = {
+    'Food-ID' : null,
+    'Point value' : 20,
+    'Quantity' : 10,
+    'Expiry date' : new Date(),
+    'H-ID' : 5,
+}
+
+const testUpdateFood : Food = {
+    'Food-ID' : 2,
+    'Point value' : 20,
+    'Quantity' : 9,
+    'Expiry date' : new Date(),
+    'H-ID' : 5,
 }
 
 const printHouseholds = async () => {
