@@ -77,6 +77,7 @@
 <script setup lang="ts">
 // calling this at the start of our application can cache all the data we will query to make things faster.
 await refreshData()
+// !!! Should store a householdID in state for currently logged in user.
 
 // Create a new user in Household 5
 const testCreateUser:User = {
