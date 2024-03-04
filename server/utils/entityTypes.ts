@@ -17,3 +17,12 @@ export interface Food {
     'Expiry date' : Date,
     'H-ID' : number,
 }
+
+export interface Reward {
+    'R-ID' : number | null,
+    'Name' : String,
+    'Points needed' : number,
+    'Description' : String,
+    'Status' : number,
+    'H-ID' : number,
+}
