@@ -47,6 +47,9 @@
             <v-btn @click="createFood(testCreateFood)">
                 Create Food
             </v-btn>
+            <v-btn @click="createReward(testCreateReward)">
+                Create Reward
+            </v-btn>
         </div>
         <div>
             <v-btn @click="updateUser(testUpdateUser)">
@@ -54,6 +57,9 @@
             </v-btn>
             <v-btn @click="updateFood(testUpdateFood)">
                 Update Food
+            </v-btn>
+            <v-btn @click="updateReward(testUpdateReward)">
+                Update Reward
             </v-btn>
         </div>
         <h2 style=" margin-top: 30px; margin-bottom: 10px;">
@@ -69,6 +75,9 @@
             <v-btn @click="deleteFood(21)">
                 Delete Food - 21
             </v-btn>
+            <v-btn @click="deleteReward(2)">
+                Delete Reward - 2
+            </v-btn>
         </div>
     </div>
 
@@ -78,6 +87,24 @@
 // calling this at the start of our application can cache all the data we will query to make things faster.
 await refreshData()
 // !!! Should store a householdID in state for currently logged in user.
+
+const testCreateReward : Reward = {
+    'R-ID' : null,
+    'Name' : 'Ice Cream',
+    'Points needed' : 25,
+    'Description' : 'Put ice cream in your mouth',
+    'Status' : 1,
+    'H-ID' : 5,
+}
+
+const testUpdateReward : Reward = {
+    'Name': 'Ice Cream',
+    'Points needed': 12,
+    'Description': 'Put ice cream in your mouth',
+    'Status': 0,
+    'R-ID': 1,
+    'H-ID': 5
+}
 
 // Create a new user in Household 5
 const testCreateUser:User = {

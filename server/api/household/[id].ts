@@ -1,3 +1,4 @@
+// !!! don't really need a getter for household, will retrieve from user and store as client side state.
 async function getHousehold(id : number) {
   const connection = await dbConnect();
   try {

@@ -20,7 +20,7 @@ export async function updateReward(rewardInfo:Reward) {
   const res = await $fetch(`/api/reward/query?rID=0&hID=0`, {
     method: 'post',
     body: {
-        'Reward-ID' : rewardInfo["R-ID"],
+        'R-ID' : rewardInfo["R-ID"],
         'Name' : rewardInfo.Name,
         'Points needed' : rewardInfo["Points needed"],
         'Description' : rewardInfo.Description,

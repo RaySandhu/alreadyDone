@@ -17,7 +17,7 @@ export const fetchFoodData = async () => {
     foodData.value = response
 };
 export const fetchRewardsData = async () => {
-    const response = await $fetch('/api/rewards', {method : 'get'});
+    const response = await $fetch('/api/reward/query?rID=0&hID=5', {method : 'get'});
     rewardsData.value = response
 };
 export const fetchTrashData = async () => {
