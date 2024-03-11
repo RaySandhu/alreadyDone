@@ -9,15 +9,15 @@ export const fetchHouseholdData = async () => {
     householdData.value = response
 };
 export const fetchUserData = async () => {
-    const response = await $fetch('/api/users/query?uID=0&hID=5', {method : 'get'}); // change this to hID accepting the logged in h-ID
+    const response = getAllUsersInHousehold(5); // change this to currently logged in hID using user info on log in
     userData.value = response
 };
 export const fetchFoodData = async () => {
-    const response = await $fetch('/api/food/query?fID=0&hID=5');
+    const response = getAllFoodInHousehold(5); // change this to currently logged in hID using user info on log in
     foodData.value = response
 };
 export const fetchRewardsData = async () => {
-    const response = await $fetch('/api/reward/query?rID=0&hID=5', {method : 'get'});
+    const response = getRewardByID(5)
     rewardsData.value = response
 };
 export const fetchTrashData = async () => {

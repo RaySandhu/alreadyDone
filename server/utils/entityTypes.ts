@@ -26,3 +26,15 @@ export interface Reward {
     'Status' : number,
     'H-ID' : number,
 }
+
+export interface RedeemedReward {
+    'ReedemID' : number,
+    'Date' : Date,
+    'U-ID' : number,
+}
+
+export interface ConsumedFood {
+    'CFood-ID' : number,
+    'Date of Consumption' : Date,
+    'U-ID' : number,
+}

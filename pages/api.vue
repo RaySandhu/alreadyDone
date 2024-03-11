@@ -27,10 +27,10 @@
             <v-btn @click="getSpecificHousehold(5)">
                 Get Specific Household - 1
             </v-btn>
-            <v-btn @click="getUsers(5,5)">
-                    Get Specific User - 5, 5
+            <v-btn @click="getUserByID(5)">
+                    Get Specific User - 5
             </v-btn>
-            <v-btn @click="getUsers(5)">
+            <v-btn @click="getAllUsersInHousehold(5)">
                     Get All Users in HouseHold 5
             </v-btn>
         </div>
@@ -78,6 +78,27 @@
             <v-btn @click="deleteReward(2)">
                 Delete Reward - 2
             </v-btn>
+        </div>
+        <h2 style=" margin-top: 30px; margin-bottom: 10px;">
+            Consume / Obtain Testing
+        </h2>
+        <div style="margin-top: 10px;">
+            <div>
+                <v-btn @click="consumeFood(consumedFoodInfo, consumingUser)">
+                    Consume Food Item ID 1
+                </v-btn>
+                <v-btn @click="">
+                    Obtain Reward ID 1
+                </v-btn>
+            </div>
+            <div>
+                <v-btn @click="">
+                    List all Rewards Obtained by User ID 5
+                </v-btn>
+                <v-btn @click="">
+                    List all Food Consumed by User ID 5
+                </v-btn>
+            </div>
         </div>
     </div>
 
@@ -144,6 +165,10 @@ const testUpdateFood : Food = {
     'Expiry date' : new Date(),
     'H-ID' : 5,
 }
+
+const consumingUser : User = await getUserByID.data[0]
+const consumedFoodInfo : Food = await getFoodByID.data[0]
+
 
 const printHouseholds = async () => {
     // await fetchHouseholdData()
