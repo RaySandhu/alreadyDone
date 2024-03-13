@@ -1,4 +1,9 @@
 
+export interface Household {
+    'House-ID' : number,
+    'Name' : String
+}
+
 export interface User {
     'User-ID' : number | null,
     'FName': String,
@@ -12,9 +17,9 @@ export interface User {
 
 export interface Food {
     'Food-ID' : number | null,
+    'Name' : String,
     'Point value' : number,
     'Quantity' : number,
-    'Expiry date' : Date,
     'H-ID' : number,
 }
 
@@ -37,4 +42,12 @@ export interface ConsumedFood {
     'CFood-ID' : number,
     'Date of Consumption' : Date,
     'U-ID' : number,
+}
+
+export interface TrashBin {
+    'Bin-ID' : number,
+    'H-ID' : number,
+    'Food-ID' : number,
+    'User-ID' : number,
+    'Date discarded' : number
 }

@@ -1,5 +1,3 @@
-import type { Reward } from "~/server/utils/entityTypes"
-
 export async function createReward(rewardInfo: Reward) {
 
     const res = await $fetch('/api/reward/create', {
@@ -31,8 +29,20 @@ export async function updateReward(rewardInfo:Reward) {
   console.log(res)
 }
 
-export const getReward = async (hID : number,rID : number = 0) => {
-  const response = await $fetch(`/api/reward/query?rID=${rID}&hID=${hID}`, {
+export const getRewardByID = async (rID : number) => {
+  const response = await $fetch(`/api/reward/query?rID=${rID}&hID=0`, {
+    method: 'get'
+  });
+  console.log(response)
+  // @ts-ignore
+  if (response.data.length === 0) {
+      console.log('This reward does not exist in our records.')
+  } else console.log('Retrieved data: ',response)
+  return response
+}
+
+export const getAllRewardsInHousehold = async (hID : number) => {
+  const response = await $fetch(`/api/reward/query?rID=0&hID=${hID}`, {
     method: 'get'
   });
   console.log(response)

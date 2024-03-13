@@ -1,7 +1,9 @@
-export async function createHousehold() {
+export async function createHousehold(houseName : String) {
     const res = await $fetch('/api/household/create', {
       method: 'post',
-      body: {}
+      body: {
+        'Name' : houseName
+      }
     })
     console.log(res)
   }

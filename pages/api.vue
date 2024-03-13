@@ -38,7 +38,7 @@
             Post testing
         </h2>
         <div style="margin-top: 10px;">
-            <v-btn @click="createHousehold()">
+            <v-btn @click="createHousehold('TestHouse')">
                 Create Household
             </v-btn>
             <v-btn @click="createUser(testCreateUser)">
@@ -84,7 +84,7 @@
         </h2>
         <div style="margin-top: 10px;">
             <div>
-                <v-btn @click="consumeFood(consumedFoodInfo, consumingUser)">
+                <v-btn @click="">
                     Consume Food Item ID 1
                 </v-btn>
                 <v-btn @click="">
@@ -151,23 +151,23 @@ const testUpdateUser:User = {
 }
 
 const testCreateFood : Food = {
-    'Food-ID' : null,
-    'Point value' : 20,
-    'Quantity' : 10,
-    'Expiry date' : new Date(),
-    'H-ID' : 5,
+    'Name': 'Banana',
+    'Food-ID': null,
+    'Point value': 20,
+    'Quantity': 10,
+    'H-ID': 5,
 }
 
 const testUpdateFood : Food = {
-    'Food-ID' : 2,
+    'Name': 'Ice Cream',
+    'Food-ID' : 20,
     'Point value' : 20,
     'Quantity' : 9,
-    'Expiry date' : new Date(),
     'H-ID' : 5,
 }
 
-const consumingUser : User = await getUserByID.data[0]
-const consumedFoodInfo : Food = await getFoodByID.data[0]
+// const consumingUser : User = await getUserByID.data[0]
+// const consumedFoodInfo : Food = await getFoodByID.data[0]
 
 
 const printHouseholds = async () => {

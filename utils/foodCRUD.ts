@@ -3,10 +3,10 @@ export async function createFood(foodInfo: Food) {
     const res = await $fetch('/api/food/create', {
       method: 'post',
       body: {
-        'Food-ID' : null,           // need to run a check to see if food already exists
+        'Food-ID' : null,           // need to run a check to see if food already exists?
+        'Name' : foodInfo['Name'],
         'Point value' : foodInfo["Point value"],
         'Quantity' : foodInfo.Quantity,
-        'Expiry date' : foodInfo["Expiry date"],
         'H-ID' : foodInfo["H-ID"],
       }
     })

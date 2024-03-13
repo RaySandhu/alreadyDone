@@ -42,15 +42,15 @@ async function getFood(fID : number, hID : number) {
     try {
       let sql = `UPDATE Food
                  SET 
-                   \`Food-ID\` = ?,
+                   Name        = ?,
                    Quantity    = ?,
-                   \`Expiry date\` = ?
+                   \`Point value\` = ?
                  WHERE \`Food-ID\` = ?;`;
       const params = [
-        updatedInfo["Point value"],
+        updatedInfo['Name'],
         updatedInfo.Quantity,
-        updatedInfo["Expiry date"],
-        updatedInfo["Food-ID"]
+        updatedInfo["Point value"],
+        updatedInfo["Food-ID"],
       ];
   
       const [results] = await connection.query(sql, params);

@@ -5,12 +5,12 @@ async function createFood(food: Food) {
         const [results] = await connection.execute(
             'INSERT INTO Food VALUES (NULL,?,?,?,?)',
             [
+              food['Name'],
               food["Point value"], 
               food.Quantity, 
-              food["Expiry date"],
               food["H-ID"]
-            ] // add name when available
-        ); 
+            ]
+        );
       return results;
     } catch (err) {
       console.error('Error:', err);
