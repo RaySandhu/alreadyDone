@@ -5,11 +5,11 @@ async function createReward(reward: Reward) {
         const [results] = await connection.execute(
             'INSERT INTO Reward VALUES (NULL,?,?,?,?,?)',
             [
-              reward.Name, 
-              reward["Points needed"], 
-              reward.Description,
-              reward.Status,
-              reward["H-ID"]
+              reward.name, 
+              reward.pointsNeeded, 
+              reward.description,
+              reward.status,
+              reward.hID
             ]
         ); 
       return results;

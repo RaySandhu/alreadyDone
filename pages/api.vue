@@ -110,60 +110,60 @@ await refreshData()
 // !!! Should store a householdID in state for currently logged in user.
 
 const testCreateReward : Reward = {
-    'R-ID' : null,
-    'Name' : 'Ice Cream',
-    'Points needed' : 25,
-    'Description' : 'Put ice cream in your mouth',
-    'Status' : 1,
-    'H-ID' : 5,
+    'rID' : null,
+    'name' : 'Ice Cream',
+    'pointsNeeded' : 25,
+    'description' : 'Put ice cream in your mouth',
+    'status' : 1,
+    'hID' : 5,
 }
 
 const testUpdateReward : Reward = {
-    'Name': 'Ice Cream',
-    'Points needed': 12,
-    'Description': 'Put ice cream in your mouth',
-    'Status': 0,
-    'R-ID': 1,
-    'H-ID': 5
+    'name': 'Ice Cream',
+    'pointsNeeded': 12,
+    'description': 'Put ice cream in your mouth',
+    'status': 0,
+    'rID': 1,
+    'hID': 5
 }
 
 // Create a new user in Household 5
 const testCreateUser:User = {
-    'User-ID'       : null,
-    'FName'         : 'Joe',
-    'LName'         : 'Shmoe',
-    'DOB'           : new Date('1998-06-25'),
-    'Points earned' : 0,
-    'Google Auth'   : 'TestGoogle',
-    'PorC-Flag'     : 'P',
-    'H-ID'          : 5,
+    'uID'       : null,
+    'fName'         : 'Joe',
+    'lName'         : 'Shmoe',
+    'dob'           : new Date('1998-06-25'),
+    'pointsEarned' : 0,
+    'googleAuth'   : 'TestGoogle',
+    'PorCFlag'     : 'P',
+    'hID'          : 5,
 }
 // Update these values to see the changes in user 6
 const testUpdateUser:User = {
-    'User-ID'       : 6,
-    'FName'         : 'Joe',
-    'LName'         : 'Cigarette',
-    'DOB'           : new Date('1998-06-25'),
-    'Points earned' : 10,
-    'Google Auth'   : 'TestGoogle',
-    'PorC-Flag'     : 'P',
-    'H-ID'          : 5,
+    'uID'           : 6,
+    'fName'         : 'Joe',
+    'lName'         : 'Test',
+    'dob'           : new Date('1998-06-25'),
+    'pointsEarned' : 10,
+    'googleAuth'   : 'TestGoogle',
+    'PorCFlag'     : 'P',
+    'hID'          : 5,
 }
 
 const testCreateFood : Food = {
-    'Name': 'Banana',
-    'Food-ID': null,
-    'Point value': 20,
-    'Quantity': 10,
-    'H-ID': 5,
+    'name': 'Banana',
+    'fID': null,
+    'pointValue': 20,
+    'quantity': 10,
+    'hID': 5,
 }
 
 const testUpdateFood : Food = {
-    'Name': 'Ice Cream',
-    'Food-ID' : 20,
-    'Point value' : 20,
-    'Quantity' : 9,
-    'H-ID' : 5,
+    'name': 'Ice Cream',
+    'fID' : 20,
+    'pointValue' : 20,
+    'quantity' : 9,
+    'hID' : 5,
 }
 
 // const consumingUser : User = await getUserByID.data[0]

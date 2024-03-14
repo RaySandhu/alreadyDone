@@ -4,10 +4,10 @@ export async function createFood(foodInfo: Food) {
       method: 'post',
       body: {
         'Food-ID' : null,           // need to run a check to see if food already exists?
-        'Name' : foodInfo['Name'],
-        'Point value' : foodInfo["Point value"],
-        'Quantity' : foodInfo.Quantity,
-        'H-ID' : foodInfo["H-ID"],
+        'Name' : foodInfo.name,
+        'Point value' : foodInfo.pointValue,
+        'Quantity' : foodInfo.quantity,
+        'H-ID' : foodInfo.hID,
       }
     })
     console.log(res)
@@ -58,7 +58,7 @@ export async function deleteFood(fID : number) {
   export async function stockFood (foodInfo: Food, quantity: number) {
     const stockedFood : Food = {
       ...foodInfo,
-      'Quantity' : foodInfo.Quantity + quantity
+      'quantity' : foodInfo.quantity + quantity
     }
     updateFood(stockedFood);
   }

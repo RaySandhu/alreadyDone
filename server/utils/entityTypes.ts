@@ -5,49 +5,49 @@ export interface Household {
 }
 
 export interface User {
-    'User-ID' : number | null,
-    'FName': String,
-    'LName': String,
-    'DOB': Date,
-    'Points earned': number,
-    'Google Auth': String,
-    'PorC-Flag': String,
-    'H-ID': number
+    'uID' : number | null,
+    'fName': String,
+    'lName': String,
+    'dob': Date,
+    'pointsEarned': number,
+    'googleAuth': String,
+    'PorCFlag': String,
+    'hID': number
 }
 
 export interface Food {
-    'Food-ID' : number | null,
-    'Name' : String,
-    'Point value' : number,
-    'Quantity' : number,
-    'H-ID' : number,
+    'fID' : number | null,
+    'name' : String,
+    'pointValue' : number,
+    'quantity' : number,
+    'hID' : number,
 }
 
 export interface Reward {
-    'R-ID' : number | null,
-    'Name' : String,
-    'Points needed' : number,
-    'Description' : String,
-    'Status' : number,
-    'H-ID' : number,
+    'rID' : number | null,
+    'name' : String,
+    'pointsNeeded' : number,
+    'description' : String,
+    'status' : number,
+    'hID' : number,
 }
 
 export interface RedeemedReward {
-    'ReedemID' : number,
-    'Date' : Date,
-    'U-ID' : number,
+    'reedemID' : number,
+    'date' : Date,
+    'uID' : number,
 }
 
 export interface ConsumedFood {
-    'CFood-ID' : number,
-    'Date of Consumption' : Date,
-    'U-ID' : number,
+    'cFoodID' : number,
+    'dateOfConsumption' : Date,
+    'uID' : number,
 }
 
 export interface TrashBin {
-    'Bin-ID' : number,
-    'H-ID' : number,
-    'Food-ID' : number,
-    'User-ID' : number,
-    'Date discarded' : number
+    'binID' : number,
+    'hID' : number,
+    'fID' : number,
+    'uID' : number,
+    'dateDiscarded' : number
 }

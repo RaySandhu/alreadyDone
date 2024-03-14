@@ -48,11 +48,11 @@ async function getReward(rID : number, hID : number) {
                    Status               = ?
                  WHERE \`R-ID\` = ?;`;
       const params = [
-        updatedInfo.Name,
-        updatedInfo["Points needed"],
-        updatedInfo.Description,
-        updatedInfo.Status,
-        updatedInfo["R-ID"]
+        updatedInfo.name,
+        updatedInfo.pointsNeeded,
+        updatedInfo.description,
+        updatedInfo.status,
+        updatedInfo.rID
       ];
   
       const [results] = await connection.query(sql, params);

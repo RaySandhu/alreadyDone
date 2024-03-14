@@ -62,7 +62,7 @@ async function getConsumedFood(cfID : number, uID : number) {
     const connection = await dbConnect()
     try {
       let sql = 'DELETE FROM Consumed_Food WHERE `CFood-ID` = ? AND `Date of Consumption` = ? AND `U-ID` = ?'
-      const params: any[] = [consumedFoodInfo["CFood-ID"], consumedFoodInfo["Date of Consumption"], consumedFoodInfo["U-ID"]];
+      const params: any[] = [consumedFoodInfo["cFoodID"], consumedFoodInfo["dateOfConsumption"], consumedFoodInfo["uID"]];
   
       const [results] = await connection.query(sql,params)
       // @ts-ignore
@@ -106,9 +106,9 @@ async function getConsumedFood(cfID : number, uID : number) {
         //   }
         case 'DELETE':
           const toDelete : ConsumedFood = {
-            'CFood-ID' : cfID,
-            'Date of Consumption' : doe,
-            'U-ID' : uID
+            'cFoodID' : cfID,
+            'dateOfConsumption' : doe,
+            'uID' : uID
           }
           try {
             await deleteConsumedFood(toDelete);

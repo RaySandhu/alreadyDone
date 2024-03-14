@@ -49,12 +49,12 @@ async function getUser(uID : number, hID : number) {
                    \`PorC-Flag\` = ?
                  WHERE \`User-ID\` = ?;`;
       const params = [
-        updatedInfo.FName,
-        updatedInfo.LName,
-        updatedInfo.DOB,
-        updatedInfo["Points earned"],
-        updatedInfo["PorC-Flag"],
-        updatedInfo["User-ID"]
+        updatedInfo.fName,
+        updatedInfo.lName,
+        updatedInfo.dob,
+        updatedInfo.pointsEarned,
+        updatedInfo.PorCFlag,
+        updatedInfo.uID
       ];
   
       const [results] = await connection.query(sql, params);
@@ -108,7 +108,7 @@ async function getUser(uID : number, hID : number) {
           const body = await readBody(event)
           try {
             await updateUser(body);
-            return { data: `User ID (${body['User-ID']}) has been updated!` };
+            return { data: `User ID (${body['uID']}) has been updated!` };
           } catch (error:any) {
             console.error(error); 
             return { error: 'Failed to update user data', details: error.message };

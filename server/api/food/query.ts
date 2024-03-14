@@ -47,10 +47,10 @@ async function getFood(fID : number, hID : number) {
                    \`Point value\` = ?
                  WHERE \`Food-ID\` = ?;`;
       const params = [
-        updatedInfo['Name'],
-        updatedInfo.Quantity,
-        updatedInfo["Point value"],
-        updatedInfo["Food-ID"],
+        updatedInfo['name'],
+        updatedInfo.quantity,
+        updatedInfo.pointValue,
+        updatedInfo.fID,
       ];
   
       const [results] = await connection.query(sql, params);

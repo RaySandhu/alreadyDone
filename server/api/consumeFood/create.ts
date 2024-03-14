@@ -4,9 +4,9 @@ async function createConsumedFood(cfood: ConsumedFood) {
         const [results] = await connection.execute(
             'INSERT INTO Consumed_Food VALUES (NULL,?,?,?)',
             [
-              cfood["CFood-ID"],
-              cfood["Date of Consumption"], 
-              cfood["U-ID"],
+              cfood["cFoodID"],
+              cfood["dateOfConsumption"], 
+              cfood["uID"],
             ]
         );
       return results;

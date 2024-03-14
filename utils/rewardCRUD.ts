@@ -4,11 +4,11 @@ export async function createReward(rewardInfo: Reward) {
       method: 'post',
       body: {
         'R-ID' : null,           // need to run a check to see if reward already exists
-        'Name' : rewardInfo.Name,
-        'Points needed' : rewardInfo["Points needed"],
-        'Description' : rewardInfo.Description,
-        'Status' : rewardInfo.Status,
-        'H-ID' : rewardInfo["H-ID"],
+        'Name' : rewardInfo.name,
+        'Points needed' : rewardInfo.pointsNeeded,
+        'Description' : rewardInfo.description,
+        'Status' : rewardInfo.status,
+        'H-ID' : rewardInfo.hID,
       }
     })
     console.log(res)
@@ -18,12 +18,12 @@ export async function updateReward(rewardInfo:Reward) {
   const res = await $fetch(`/api/reward/query?rID=0&hID=0`, {
     method: 'post',
     body: {
-        'R-ID' : rewardInfo["R-ID"],
-        'Name' : rewardInfo.Name,
-        'Points needed' : rewardInfo["Points needed"],
-        'Description' : rewardInfo.Description,
-        'Status' : rewardInfo.Status,
-        'H-ID' : rewardInfo["H-ID"],
+        'R-ID' : rewardInfo.rID,
+        'Name' : rewardInfo.name,
+        'Points needed' : rewardInfo.pointsNeeded,
+        'Description' : rewardInfo.description,
+        'Status' : rewardInfo.status,
+        'H-ID' : rewardInfo.hID,
     }
   })
   console.log(res)

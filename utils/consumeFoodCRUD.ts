@@ -10,18 +10,18 @@ export async function consumeFood(foodInfo: Food, userInfo: User) {
     const res = await $fetch('/api/consumeFood/create', {
       method: 'post',
       body: {
-        'CFood-ID' : foodInfo["Food-ID"],
+        'CFood-ID' : foodInfo.fID,
         'Date of Consumption' : Date,
-        'U-ID' : userInfo["User-ID"],
+        'U-ID' : userInfo.uID,
       }
     })
     // rewrite food item with one less available quantity. 
     const updatedFoodInfo : Food = {
       ...foodInfo,
-      'Quantity' : foodInfo.Quantity - 1,
+      'quantity' : foodInfo.quantity - 1,
     }
     updateFood(updatedFoodInfo)
-    updateUserPoints(userInfo, foodInfo["Point value"])
+    updateUserPoints(userInfo, foodInfo.pointValue)
   
     console.log(res)
 }

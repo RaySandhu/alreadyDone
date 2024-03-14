@@ -5,10 +5,10 @@ async function createFood(food: Food) {
         const [results] = await connection.execute(
             'INSERT INTO Food VALUES (NULL,?,?,?,?)',
             [
-              food['Name'],
-              food["Point value"], 
-              food.Quantity, 
-              food["H-ID"]
+              food['name'],
+              food["pointValue"], 
+              food.quantity, 
+              food["hID"]
             ]
         );
       return results;

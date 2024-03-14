@@ -3,14 +3,14 @@ export async function createUser(userInfo: User) {
     const res = await $fetch('/api/users/create', {
       method: 'post',
       body: {
-        'User-ID'       : null,
-        'FName'         : userInfo.FName,
-        'LName'         : userInfo.LName,
-        'DOB'           : userInfo.DOB,
-        'Points earned' : 0,
-        'Google Auth'   : userInfo["Google Auth"], // FK from Auth
-        'PorC-Flag'     : userInfo["PorC-Flag"],
-        'H-ID'          : userInfo["H-ID"],
+        'uID'           : null,
+        'fName'         : userInfo.fName,
+        'lName'         : userInfo.lName,
+        'dob'           : userInfo.dob,
+        'pointsEarned'  : 0,
+        'googleAuth'    : userInfo.googleAuth,
+        'PorCFlag'      : userInfo.PorCFlag,
+        'hID'           : userInfo.hID,
       }
     })
     console.log(res)
@@ -20,17 +20,17 @@ export async function updateUser(userInfo:User) {
   const res = await $fetch(`/api/users/query?uID=0&hID=0`, {
     method: 'post',
     body: {
-      'User-ID'       : userInfo["User-ID"],
-      'FName'         : userInfo.FName,
-      'LName'         : userInfo.LName,
-      'DOB'           : userInfo.DOB,
-      'Points earned' : userInfo["Points earned"],
-      'Google Auth'   : userInfo["Google Auth"], // FK from Auth
-      'PorC-Flag'     : userInfo["PorC-Flag"],
-      'H-ID'          : userInfo["H-ID"],
+      'uID'           : userInfo.uID,
+      'fName'         : userInfo.fName,
+      'lName'         : userInfo.lName,
+      'dob'           : userInfo.dob,
+      'pointsEarned'  : userInfo.PorCFlag,
+      'googleAuth'    : userInfo.googleAuth,
+      'PorCFlag'      : userInfo.PorCFlag,
+      'hID'           : userInfo.hID,
     }
   })
-  console.log(res)
+  console.log(res, userInfo.uID)
 }
 
 export const getAllUsersInHousehold = async (hID : number) => {
@@ -62,7 +62,7 @@ export async function updateUserPoints(userInfo:User, pointValue: number) {
     method: 'post',
     body: {
       ...userInfo,
-      'Points earned' : userInfo["Points earned"] + pointValue,
+      'Points earned' : userInfo.pointsEarned + pointValue,
     }
   })
   console.log(res)
