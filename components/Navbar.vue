@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed flex flex-shrink-0 h-16 w-screen max-w-full z-10 bg-bone-100 border-b-2 border-red-200">
+    <div class="fixed flex flex-shrink-0 h-16 w-screen max-w-full z-10 bg-gradient-to-b from-white to-orange-50 shadow-md border-b-2 border-red-200">
         <div class="flex h-16 items-center">
             <!-- Logo and Name (not in mobile view) + Menu Hamburger for the main side bar (mobile view)-->
             <nuxt-icon name="AlreadyDoneLogo" class="text-5xl text-amour-300 mx-3" />
