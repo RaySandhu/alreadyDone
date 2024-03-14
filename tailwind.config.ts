@@ -25,7 +25,13 @@ export default {
                 400: '#004C21',
                 500: '#002C01',
             },
-            'gold':'#f6d842',
+            'gold':{
+                50: '#FFE979',
+                100: '#f6d842',
+                200: '#CEB11D',
+                300: '#B0950E',
+                400: '#877102',
+            },
         },
         fontFamily:{
             bitter: ['Bitter', 'serif',],
