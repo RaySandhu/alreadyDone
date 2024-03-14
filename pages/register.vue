@@ -87,7 +87,7 @@
 <template>
     <div class="bg-gradient-to-b from-bone-300 to-bone-50 w-screen h-screen overflow-auto justify-center flex">
         <!-- What we need: first name, last name, Parent vs. Child status, Household (creation available only for parent users)-->
-        <div class="bg-bone-200 border-bone-300 rounded-xl p-5 my-16 border-2 w-4/5 overflow-auto">
+        <div class="shadow-md bg-bone-200 border-bone-300 rounded-xl p-5 my-16 border-2 w-4/5 overflow-auto">
             <h1 class="font-museoModerno text-lg font-bold">Register</h1>
             <!-- Let's start with name -->
             <form class="text-sm sm:text-base">
