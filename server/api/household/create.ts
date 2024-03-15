@@ -1,7 +1,7 @@
-async function createHousehold() {
+async function createHousehold(houseName: String) {
     const connection = await dbConnect();
     try {
-      const [results] = await connection.execute('INSERT INTO Household VALUES (NULL)'); // test : success!
+      const [results] = await connection.execute('INSERT INTO Household VALUES (NULL, ?)', [houseName]); // test : success!
       return results;
     } catch (err) {
       console.error('Error:', err);
@@ -12,10 +12,10 @@ async function createHousehold() {
   }
   
   export default defineEventHandler(async (event) => {
-    const body = await readBody(event)  // test : success!
+    const householdInfo = await readBody(event)
     try {
-      const res = await createHousehold();
-      console.log('Body contents are : ', body)
+      const res = await createHousehold(householdInfo.Name);
+      console.log('Body contents are : ', householdInfo)
       return { data: res };
     } catch (error:any) {
       console.error(error); 

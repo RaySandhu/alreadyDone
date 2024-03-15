@@ -1,14 +1,12 @@
-async function createFood(food: Food) {
+async function createConsumedFood(cfood: ConsumedFood) {
     const connection = await dbConnect();
     try {
-        
         const [results] = await connection.execute(
-            'INSERT INTO Food VALUES (NULL,?,?,?,?)',
+            'INSERT INTO Consumed_Food VALUES (NULL,?,?,?)',
             [
-              food['name'],
-              food["pointValue"], 
-              food.quantity, 
-              food["hID"]
+              cfood["cFoodID"],
+              cfood["dateOfConsumption"], 
+              cfood["uID"],
             ]
         );
       return results;
@@ -23,12 +21,12 @@ async function createFood(food: Food) {
   export default defineEventHandler(async (event) => {
     const body = await readBody(event)  
     try {
-      const res = await createFood(body);
+      const res = await createConsumedFood(body);
       console.log('Body contents are : ', body)
       return { data: res };
     } catch (error:any) {
       console.error(error); 
-      return { error: 'Failed to create a food item', details: error.message };
+      return { error: 'Failed to create a consumed food item', details: error.message };
     }
   });
   

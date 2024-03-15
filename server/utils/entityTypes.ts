@@ -1,19 +1,53 @@
 
+export interface Household {
+    'House-ID' : number,
+    'Name' : String
+}
+
 export interface User {
-    'User-ID' : number | null,
-    'FName': String,
-    'LName': String,
-    'DOB': Date,
-    'Points earned': number,
-    'Google Auth': String,
-    'PorC-Flag': String,
-    'H-ID': number
+    'uID' : number | null,
+    'fName': String,
+    'lName': String,
+    'dob': Date,
+    'pointsEarned': number,
+    'googleAuth': String,
+    'PorCFlag': String,
+    'hID': number
 }
 
 export interface Food {
-    'Food-ID' : number | null,
-    'Point value' : number,
-    'Quantity' : number,
-    'Expiry date' : Date,
-    'H-ID' : number,
+    'fID' : number | null,
+    'name' : String,
+    'pointValue' : number,
+    'quantity' : number,
+    'hID' : number,
+}
+
+export interface Reward {
+    'rID' : number | null,
+    'name' : String,
+    'pointsNeeded' : number,
+    'description' : String,
+    'status' : number,
+    'hID' : number,
+}
+
+export interface RedeemedReward {
+    'reedemID' : number,
+    'date' : Date,
+    'uID' : number,
+}
+
+export interface ConsumedFood {
+    'cFoodID' : number,
+    'dateOfConsumption' : Date,
+    'uID' : number,
+}
+
+export interface TrashBin {
+    'binID' : number,
+    'hID' : number,
+    'fID' : number,
+    'uID' : number,
+    'dateDiscarded' : number
 }

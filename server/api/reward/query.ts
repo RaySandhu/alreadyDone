@@ -1,13 +1,13 @@
 /*
-    uID = 0 will return all users in Household
-    set hID = 0 as convention if querying all users
+    rID = 0 will return all reward in Household
+    set hID = 0 as convention if querying all rewards in a household
 */
-async function getUser(uID : number, hID : number) {
+async function getReward(rID : number, hID : number) {
     const connection = await dbConnect();
 
-    if (uID == 0) {
+    if (rID == 0) {
       try {
-        let sql = `SELECT * FROM Users WHERE \`H-ID\` = ${hID}`;
+        let sql = `SELECT * FROM Reward WHERE \`H-ID\` = ${hID}`;
         const params: number[] = [];
   
         const [results] = await connection.query(sql, params);
@@ -21,7 +21,7 @@ async function getUser(uID : number, hID : number) {
       }
     } else {
       try {
-        let sql = `SELECT * FROM Users WHERE \`User-ID\` = ${uID}`;
+        let sql = `SELECT * FROM Reward WHERE \`R-ID\` = ${rID}`;
         const params: number[] = [];
   
         const [results] = await connection.query(sql, params);
@@ -35,26 +35,24 @@ async function getUser(uID : number, hID : number) {
       }
     }
   }
-  
-  async function updateUser(updatedInfo:User) {
+
+  async function updateReward(updatedInfo:Reward) {
     const connection = await dbConnect();
     console.log(updatedInfo);
     try {
-      let sql = `UPDATE Users
+      let sql = `UPDATE Reward
                  SET 
-                   Fname = ?,
-                   Lname = ?, 
-                   DOB = ?,
-                   \`Points Earned\` = ?,
-                   \`PorC-Flag\` = ?
-                 WHERE \`User-ID\` = ?;`;
+                   Name                 = ?,
+                   \`Points needed\`    = ?,
+                   Description          = ?,
+                   Status               = ?
+                 WHERE \`R-ID\` = ?;`;
       const params = [
-        updatedInfo.fName,
-        updatedInfo.lName,
-        updatedInfo.dob,
-        updatedInfo.pointsEarned,
-        updatedInfo.PorCFlag,
-        updatedInfo.uID
+        updatedInfo.name,
+        updatedInfo.pointsNeeded,
+        updatedInfo.description,
+        updatedInfo.status,
+        updatedInfo.rID
       ];
   
       const [results] = await connection.query(sql, params);
@@ -68,16 +66,16 @@ async function getUser(uID : number, hID : number) {
     }
   }
   
-  async function deleteUser (uID: number) {
+  async function deleteReward (rID: number) {
     const connection = await dbConnect()
     try {
-      let sql = 'DELETE FROM Users WHERE `User-ID` = ?'
-      const params: number[] = [uID];
+      let sql = 'DELETE FROM Reward WHERE `R-ID` = ?'
+      const params: number[] = [rID];
   
       const [results] = await connection.query(sql,params)
       // @ts-ignore
       if (results.affectedRows === 0) {
-        throw createError({ statusCode: 404, message: 'User not found' });
+        throw createError({ statusCode: 404, message: 'Reward not found' });
       }
       return results
     } catch (err) {
@@ -92,34 +90,34 @@ async function getUser(uID : number, hID : number) {
     export default defineEventHandler(async (event) => {
       const method = event.method
       const query = getQuery(event)
-      const uID = parseInt(query.uID!.toString()) as number
+      const rID = parseInt(query.rID!.toString()) as number
       const hID = parseInt(query.hID!.toString()) as number
       
       switch (method) {
         case 'GET':
           try {
-            const users = await getUser(uID, hID);
-            return { data: users };
+            const reward = await getReward(rID, hID);
+            return { data: reward };
           } catch (error:any) {
             console.error(error); 
-            return { error: 'Failed to fetch user data', details: error.message };
+            return { error: 'Failed to fetch reward data', details: error.message };
           }
         case 'POST':
           const body = await readBody(event)
           try {
-            await updateUser(body);
-            return { data: `User ID (${body['uID']}) has been updated!` };
+            await updateReward(body);
+            return { data: `Reward ID (${body['R-ID']}) has been updated!` };
           } catch (error:any) {
             console.error(error); 
-            return { error: 'Failed to update user data', details: error.message };
+            return { error: 'Failed to update reward data', details: error.message };
           }
         case 'DELETE':
           try {
-            await deleteUser(uID);
-            return { data: `User ID (${uID}) has been deleted!` };
+            await deleteReward(rID);
+            return { data: `Reward ID (${rID}) has been deleted!` };
           } catch (error:any) {
             console.error(error); 
-            return { error: 'Failed to delete user data', details: error.message };
+            return { error: 'Failed to delete reward data', details: error.message };
           }
       }
     });
