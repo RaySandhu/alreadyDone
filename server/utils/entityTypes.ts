@@ -32,8 +32,8 @@ export interface Reward {
     'hID' : number,
 }
 
-export interface RedeemedReward {
-    'reedemID' : number,
+export interface ObtainedReward {
+    'redeemID' : number,
     'date' : Date,
     'uID' : number,
 }

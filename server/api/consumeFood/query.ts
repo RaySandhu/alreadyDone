@@ -1,5 +1,6 @@
 /**
  * Return all or specific food items consumed by a user
+ * Retrieving all consumed food in a household is the combined list of all consumed foods for each user
  * @param cfID setting to 0 returns all food items consumed by user. 
  *             Else returns specific food items that were consumed
  * @param uID CANNOT be 0. Returns all food items for specified user.
@@ -22,34 +23,6 @@ async function getConsumedFood(cfID : number, uID : number) {
       await connection.end();
     }
   }
-  // Don't think we need an updateConsumedFood -- just delete anything that needs an edit
-  // async function updateConsumedFood(updatedInfo:ConsumedFood) {
-  //   const connection = await dbConnect();
-  //   console.log(updatedInfo);
-  //   try {
-  //     let sql = `UPDATE Food
-  //                SET 
-  //                  \`Food-ID\` = ?,
-  //                  Quantity    = ?,
-  //                  \`Expiry date\` = ?
-  //                WHERE \`Food-ID\` = ?;`;
-  //     const params = [
-  //       updatedInfo["Point value"],
-  //       updatedInfo.Quantity,
-  //       updatedInfo["Expiry date"],
-  //       updatedInfo["Food-ID"]
-  //     ];
-  
-  //     const [results] = await connection.query(sql, params);
-  //     console.log(sql, params);
-  //     return results;
-  //   } catch (err) {
-  //     console.error('Error:', err);
-  //     throw err;
-  //   } finally {
-  //     await connection.end();
-  //   }
-  // }
   
   /**
    * BEWARE since there are no real PKs and duplicates can exist
@@ -82,11 +55,12 @@ async function getConsumedFood(cfID : number, uID : number) {
     export default defineEventHandler(async (event) => {
       const method = event.method
       const query = getQuery(event)
-      const cfID = parseInt(query.cfID!.toString()) as number
+      const cfID = parseInt(query.fID!.toString()) as number
       const uID = parseInt(query.uID!.toString()) as number
-      const doe = new Date(query.doe!.toString()) 
+      const doe = new Date(query.doe!.toString())         // !!! currently date only handled for deletion queries
 
       switch (method) {
+
         case 'GET':
           try {
             const consumedFood = await getConsumedFood(cfID, uID);
@@ -95,16 +69,9 @@ async function getConsumedFood(cfID : number, uID : number) {
             console.error(error); 
             return { error: 'Failed to fetch consumed food data', details: error.message };
           }
-        // case 'POST':
-        //   const body = await readBody(event)
-        //   try {
-        //     await updateFood(body);
-        //     return { data: `Food ID (${body['Food-ID']}) has been updated!` };
-        //   } catch (error:any) {
-        //     console.error(error); 
-        //     return { error: 'Failed to update food data', details: error.message };
-        //   }
+
         case 'DELETE':
+
           const toDelete : ConsumedFood = {
             'cFoodID' : cfID,
             'dateOfConsumption' : doe,

@@ -84,18 +84,18 @@
         </h2>
         <div style="margin-top: 10px;">
             <div>
-                <v-btn @click="">
+                <v-btn @click="consumeFood(testUpdateFood, testUpdateUser)">
                     Consume Food Item ID 1
                 </v-btn>
-                <v-btn @click="">
+                <v-btn @click="obtainReward(testUpdateReward, testUpdateUser)">
                     Obtain Reward ID 1
                 </v-btn>
             </div>
             <div>
-                <v-btn @click="">
+                <v-btn @click="printObtainedRewards">
                     List all Rewards Obtained by User ID 5
                 </v-btn>
-                <v-btn @click="">
+                <v-btn @click="printConsumedFood">
                     List all Food Consumed by User ID 5
                 </v-btn>
             </div>
@@ -129,25 +129,25 @@ const testUpdateReward : Reward = {
 
 // Create a new user in Household 5
 const testCreateUser:User = {
-    'uID'       : null,
+    'uID'           : null,
     'fName'         : 'Joe',
     'lName'         : 'Shmoe',
     'dob'           : new Date('1998-06-25'),
-    'pointsEarned' : 0,
-    'googleAuth'   : 'TestGoogle',
-    'PorCFlag'     : 'P',
-    'hID'          : 5,
+    'pointsEarned'  : 0,
+    'googleAuth'    : 'TestGoogle',
+    'PorCFlag'      : 'P',
+    'hID'           : 5,
 }
-// Update these values to see the changes in user 6
+// Update these values to see the changes in user 5
 const testUpdateUser:User = {
-    'uID'           : 6,
-    'fName'         : 'Joe',
-    'lName'         : 'Test',
-    'dob'           : new Date('1998-06-25'),
-    'pointsEarned' : 10,
-    'googleAuth'   : 'TestGoogle',
-    'PorCFlag'     : 'P',
-    'hID'          : 5,
+        "uID": 5,
+        "fName": "Ray",
+        "lName": "Sandhu",
+        "dob": new Date('1998-06-25'),
+        "pointsEarned": 0,
+        "googleAuth": "TestGoogle",
+        "PorCFlag": "P",
+        "hID": 5
 }
 
 const testCreateFood : Food = {
@@ -166,28 +166,40 @@ const testUpdateFood : Food = {
     'hID' : 5,
 }
 
-// const consumingUser : User = await getUserByID.data[0]
-// const consumedFoodInfo : Food = await getFoodByID.data[0]
+const testCreateConsumedFood : ConsumedFood = {
+    cFoodID: 20,
+    dateOfConsumption : new Date(),
+    uID : 5
+}
+
+const testCreateObtainedReward : ObtainedReward = {
+    redeemID: 1,
+    date : new Date(),
+    uID : 5
+}
 
 
-const printHouseholds = async () => {
-    // await fetchHouseholdData()
+const printHouseholds = () => {
     console.log(householdData.value.data)
 }
-const printUsers = async () => {
-    // await fetchUserData()
+const printUsers = () => {
     console.log(userData.value!.data)
 }
-const printFood = async () => {
-    // await fetchFoodData()
+const printFood = () => {
     console.log(foodData.value!.data)
 }
-const printRewards = async () => {
-    // await fetchRewardsData()
+const printRewards = () => {
     console.log(rewardsData.value!.data)
 }
-const printTrash = async () => {
-    // await fetchTrashData()
+const printConsumedFood = () => {
+    console.log(consumedFoodData.value!.data)
+}
+
+const printObtainedRewards = () => {
+    console.log(obtainedRewardData.value!.data)
+}
+
+const printTrash = () => {
     console.log(trashData.value!.data)
 }
 
