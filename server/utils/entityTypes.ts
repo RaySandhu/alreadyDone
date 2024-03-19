@@ -49,5 +49,5 @@ export interface TrashBin {
     'hID' : number,
     'fID' : number,
     'uID' : number,
-    'dateDiscarded' : number
+    'dateDiscarded' : Date
 }

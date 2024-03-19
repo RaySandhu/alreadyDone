@@ -50,6 +50,9 @@
             <v-btn @click="createReward(testCreateReward)">
                 Create Reward
             </v-btn>
+            <v-btn @click="throwTrash(5, testUpdateFood, testUpdateUser)">
+                Throw Trash
+            </v-btn>
         </div>
         <div>
             <v-btn @click="updateUser(testUpdateUser)">
@@ -178,6 +181,13 @@ const testCreateObtainedReward : ObtainedReward = {
     uID : 5
 }
 
+const testThrowFood : TrashBin = {
+    'binID' : 5,
+    'hID' : 5,
+    'fID' : 20,
+    'uID' : 5,
+    'dateDiscarded' : new Date()
+}
 
 const printHouseholds = () => {
     console.log(householdData.value.data)

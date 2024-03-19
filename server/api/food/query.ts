@@ -104,7 +104,7 @@ async function getFood(fID : number, hID : number) {
           const body = await readBody(event)
           try {
             await updateFood(body);
-            return { data: `Food ID (${body['Food-ID']}) has been updated!` };
+            return { data: `Food ID (${fID}) has been updated!` };
           } catch (error:any) {
             console.error(error); 
             return { error: 'Failed to update food data', details: error.message };
