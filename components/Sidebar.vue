@@ -30,7 +30,7 @@
             </v-btn>
             <!-- Logout -->
             <v-btn class="flex justify-start align-center my-2" variant="text" color="white" @click="signOut()">
-                <nuxt-icon name="Logout" class="text-3xl" />
+                <nuxt-icon name="LogOut" class="text-3xl" />
                 <h1 class="hidden md:block ml-1">Logout</h1>
             </v-btn>
         </div>
