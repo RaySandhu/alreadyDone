@@ -1,3 +1,7 @@
+<script setup lang="ts">
+   const { data } = useAuth();
+</script>
+
 <template>
     <div class="fixed flex flex-shrink-0 h-16 w-screen max-w-full z-10 bg-gradient-to-b from-white to-orange-50 shadow-md border-b-2 border-red-200">
         <div class="flex h-16 items-center mr-1">
@@ -22,13 +26,11 @@
         <div class="hidden md:block ml-auto mr-5">
             <div class="flex flex-row justify-center align-center h-16">
                 <h1 class="text-amour-300 mx-5"> {{ data?.user?.name }} </h1>
-                <v-btn color="red"> Household 1 </v-btn>
+                <a href="/household">
+                    <v-btn color="red"> Household 1 </v-btn>
+                </a>
             </div>
         </div>
     </div>
 
 </template>
-
-<script setup lang="ts">
-   const { data } = useAuth();
-</script>

@@ -5,7 +5,7 @@
     layout: false,
     auth: {
       unauthenticatedOnly: true,
-      navigateAuthenticatedTo: '/dashboard',
+      navigateAuthenticatedTo: '/register',
     },
 })
 </script>

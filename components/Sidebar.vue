@@ -8,21 +8,26 @@
         <!-- Links -->
         <div class="flex flex-col mt-10">
             <!-- Dashboard -->
-            <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
-                <nuxt-icon name="Apple" class="text-3xl" />
-                <h1 class="hidden md:block ml-1">Dashboard</h1>
-            </v-btn>
-            
+            <a href="/dashboard">
+                <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
+                    <nuxt-icon name="Apple" class="text-3xl" />
+                    <h1 class="hidden md:block ml-1">Dashboard</h1>
+                </v-btn>
+            </a>
             <!-- Household -->
-            <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
-                <nuxt-icon name="House" class="text-3xl" />
-                <h1 class="hidden md:block ml-1">Household</h1>
-            </v-btn>
+            <a href="/household">
+                <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
+                    <nuxt-icon name="House" class="text-3xl" />
+                    <h1 class="hidden md:block ml-1">Household</h1>
+                </v-btn>
+            </a>
             <!-- Profile -->
-            <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
-                <nuxt-icon name="Profile" class="text-3xl" />
-                <h1 class="hidden md:block ml-1">Profile</h1>
-            </v-btn>
+            <a href="/profile">
+                <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
+                    <nuxt-icon name="Profile" class="text-3xl" />
+                    <h1 class="hidden md:block ml-1">Profile</h1>
+                </v-btn>
+            </a>
             <!-- Settings -->
             <v-btn class="flex justify-start align-center my-2" variant="text" color="white">
                 <nuxt-icon name="Settings" class="text-3xl" />
