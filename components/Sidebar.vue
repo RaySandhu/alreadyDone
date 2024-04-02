@@ -27,7 +27,7 @@
                     <nuxt-icon name="Profile" class="text-3xl" />
                     <h1 class="hidden md:block ml-1">Profile</h1>
                 </v-btn>
-            </a>s
+            </a>
             <!-- Logout -->
             <v-btn class="flex justify-start align-center my-2" variant="text" color="white" @click="signOut()">
                 <nuxt-icon name="LogOut" class="text-3xl" />
