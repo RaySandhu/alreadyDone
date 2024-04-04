@@ -1,12 +1,15 @@
-async function createConsumedFood(cfood: ConsumedFood) {
+async function creatObtainedReward(oReward: ObtainedReward) {
     const connection = await dbConnect();
     try {
+        console.log(              oReward.redeemID,
+          oReward.date,
+          oReward.uID,)
         const [results] = await connection.execute(
-            'INSERT INTO Consumed_Food VALUES (?,?,?)',
+            'INSERT INTO Redeemed_Reward VALUES (?,?,?)',
             [
-              cfood["cFoodID"],
-              cfood["dateOfConsumption"], 
-              cfood["uID"],
+              oReward.redeemID,
+              oReward.date,
+              oReward.uID,
             ]
         );
       return results;
@@ -20,13 +23,14 @@ async function createConsumedFood(cfood: ConsumedFood) {
   
   export default defineEventHandler(async (event) => {
     const body = await readBody(event)  
+    console.log(body.redeemID)
     try {
-      const res = await createConsumedFood(body);
+      const res = await creatObtainedReward(body);
       console.log('Body contents are : ', body)
       return { data: res };
     } catch (error:any) {
       console.error(error); 
-      return { error: 'Failed to create a consumed food item', details: error.message };
+      return { error: 'Failed to create an obtained reward item', details: error.message };
     }
   });
   

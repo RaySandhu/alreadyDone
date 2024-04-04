@@ -3,6 +3,10 @@ export const userData = ref();
 export const foodData = ref();
 export const rewardsData = ref();
 export const trashData = ref();
+export const consumedFoodData = ref();
+export const obtainedRewardData = ref();
+
+// These fetch functions will require the users ID as parameters
 
 export const fetchHouseholdData = async () => {
     const response = await $fetch('/api/household/0');
@@ -20,6 +24,14 @@ export const fetchRewardsData = async () => {
     const response = await getAllRewardsInHousehold(5)
     rewardsData.value = response
 };
+export const fetchConsumedFoodData = async () => {
+    const response = await getConsumedFoodForUser(5)
+    consumedFoodData.value = response
+};
+export const fetchObtainedRewardsData = async () => {
+    const response = await getObtainedRewardForUser(5)
+    obtainedRewardData.value = response
+};
 export const fetchTrashData = async () => {
     const response = await $fetch('/api/trashBin', {method : 'get'});
     trashData.value = response
@@ -32,5 +44,7 @@ export const refreshData = async () => {
     await fetchFoodData()
     await fetchRewardsData()
     await fetchTrashData()
+    await fetchConsumedFoodData()
+    await fetchObtainedRewardsData()
     console.log('Refresh complete!')
 }

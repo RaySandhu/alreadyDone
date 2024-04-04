@@ -39,11 +39,10 @@ export const getFoodByID = async (fID : number) => {
   const response = await $fetch(`/api/food/query?fID=${fID}&hID=0`, {
     method: 'get'
   });
-  console.log(response)
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('No such food exists in our records.')
-  } else console.log('Retrieved data: ',response)
+  }
   return response
 }
 

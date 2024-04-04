@@ -3,7 +3,7 @@
         <Navbar />
         <div class="flex"> 
             <Sidebar />
-            <div class="overflow-y-auto mt-16">
+            <div class="overflow-y-auto w-full m-16 mr-0 md:ml-64">
                 <slot />
             </div>
             

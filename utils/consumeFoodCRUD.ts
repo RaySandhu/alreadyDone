@@ -10,9 +10,9 @@ export async function consumeFood(foodInfo: Food, userInfo: User) {
     const res = await $fetch('/api/consumeFood/create', {
       method: 'post',
       body: {
-        'CFood-ID' : foodInfo.fID,
-        'Date of Consumption' : Date,
-        'U-ID' : userInfo.uID,
+        'cFoodID' : foodInfo.fID,
+        'dateOfConsumption' : new Date(),
+        'uID' : userInfo.uID,
       }
     })
     // rewrite food item with one less available quantity. 
@@ -20,6 +20,7 @@ export async function consumeFood(foodInfo: Food, userInfo: User) {
       ...foodInfo,
       'quantity' : foodInfo.quantity - 1,
     }
+    //!! need to protect this following call in success response conditional
     updateFood(updatedFoodInfo)
     updateUserPoints(userInfo, foodInfo.pointValue)
   
@@ -29,12 +30,12 @@ export async function consumeFood(foodInfo: Food, userInfo: User) {
 /**
  * Return consumed food info for a user, food type specific if specified.
  * If consumed food info is desired for all users in a household, request iteratively for each user
- * @param hID 
+ * @param uID 
  * @param fID 
  * @returns 
  */
-export const getConsumedFoodForUser = async (hID : number,fID : number = 0) => {
-  const response = await $fetch(`/api/consumeFood/query?fID=${fID}&hID=${hID}`, {
+export const getConsumedFoodForUser = async (uID : number,fID : number = 0) => {
+  const response = await $fetch(`/api/consumeFood/query?fID=${fID}&uID=${uID}&doe=''`, { // !!! need to add search by date
     method: 'get'
   });
   console.log(response)
@@ -42,6 +43,7 @@ export const getConsumedFoodForUser = async (hID : number,fID : number = 0) => {
   if (response.data.length === 0) {
       console.log('This food does not exist in our records.')
   } else console.log('Retrieved data: ',response)
+
   return response
 }
 
