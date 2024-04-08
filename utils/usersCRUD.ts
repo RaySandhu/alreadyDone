@@ -14,6 +14,7 @@ export async function createUser(userInfo: User) {
       }
     })
     console.log(res)
+    return res
 }
 
 export async function updateUser(userInfo:User) {
@@ -54,6 +55,20 @@ export const getUserByID = async (uID : number) => {
   if (response.data.length === 0) {
       console.log('This user does not exist in our records.')
   } else console.log('Retrieved data: ',response)
+  return response
+}
+
+
+export const getUserByEmail = async (email : String) => {
+  const response = await $fetch(`/api/users/query?email=${email}&hID=0`, {
+    method: 'get'
+  });
+  console.log(response)
+  // @ts-ignore
+  // if (response.data.length === 0) {
+  //     console.log('This user does not exist in our records.')
+  // } else 
+  console.log('Retrieved data: ',response)
   return response
 }
 

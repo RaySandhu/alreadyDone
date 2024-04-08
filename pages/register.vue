@@ -35,9 +35,11 @@
                 formFeedback.value = 'Please provide a Household Name';
                 return;
             }
+    // @ts-ignore
             householdID.value = await createHousehold(houseName.value.trim()).then(res => res.data).insertId
         }
         else{
+    // @ts-ignore
             houseInfo.value = await getSpecificHousehold(householdID.value).then(res => res.data) // needs to be a ref for reactive data
 
             if(houseInfo.value == undefined){
@@ -51,44 +53,30 @@
             }
         }
 
-        // Put into database:
-        // UserID: Random number
-        // Firstname: name.value
-        // Lastname: lName.value
-        // DOB: year.value/month.value/day.value ----> May make a composite value
-        // Points earned = 0 -----> Do we want to give any points for joining?
-        // Google auth: email?
-        // PorC flag (true if parent): parent.value
-        // H-ID: householdID.value
-    //     const lName = ref('');
-    // const year = ref('');
-    // const month = ref('');
-    // const day = ref('');
-    // const parent = ref(false);
-    // const householdID = ref();
-    // const houseName = ref('');
-
         //final form validation
         if(userEmail == undefined) {
-            const currentYear = new Date().getFullYear();
-            if (year.value < 1900 || year.value > currentYear) {
-                formFeedback.value =  `Year must be between 1900 and ${currentYear}.`;
-                return
-            }
-            if (month.value < 1 || month.value > 12) {
-                formFeedback.value = "Month must be between 01 and 12.";
-                return
-            }
+            formFeedback.value =  `The user's email is invalid.`;
+            return
+        }
+        const currentYear = new Date().getFullYear();
+        if (year.value < 1900 || year.value > currentYear) {
+            formFeedback.value =  `Year must be between 1900 and ${currentYear}.`;
+            return
+        }
+        if (month.value < 1 || month.value > 12) {
+            formFeedback.value = "Month must be between 01 and 12.";
+            return
+        }
 
-            function isLeapYear(y : number) {
-                return y % 400 === 0 || (y % 100 !== 0 && y % 4 === 0);
-            }
+        function isLeapYear(y : number) {
+            return y % 400 === 0 || (y % 100 !== 0 && y % 4 === 0);
+        }
 
-            const monthLengths = [31, isLeapYear(year.value) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        const monthLengths = [31, isLeapYear(year.value) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-            if (day.value < 1 || day.value > monthLengths[month.value - 1]) {
-                return `Day must be between 01 and ${monthLengths[month.value - 1]} for the given month.`;
-            }
+        if (day.value < 1 || day.value > monthLengths[month.value - 1]) {
+            formFeedback.value = `Day must be between 01 and ${monthLengths[month.value - 1]} for the given month.`;
+            return;
         }
         
         const validUserToCreate : User = {
@@ -103,8 +91,13 @@
         }
         
         console.log(validUserToCreate)
+    // @ts-ignore
+        validUserToCreate.uID = await createUser(validUserToCreate).then(res => res.data).insertId
+        loggedInUser.value = validUserToCreate
         formFeedback.value = 'Form Complete';
         // Then redirect to dashboard
+        // <NuxtLink to="/about">About</NuxtLink>
+        navigateTo('/dashboard')
     }
 
     function updateStyle(b: boolean){

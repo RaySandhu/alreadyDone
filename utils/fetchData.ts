@@ -5,6 +5,7 @@ export const rewardsData = ref();
 export const trashData = ref();
 export const consumedFoodData = ref();
 export const obtainedRewardData = ref();
+export const loggedInUser= ref()
 
 // These fetch functions will require the users ID as parameters
 
@@ -37,8 +38,19 @@ export const fetchTrashData = async () => {
     trashData.value = response
 };
 
-export const refreshData = async () => {
+export const fetchLoggedInUser = async (email : String) => {
+    const response = getUserByEmail(email)
+    // @ts-ignore
+    loggedInUser.value = await response.then(res => res.data)
+    if (loggedInUser.value.length == 0) {
+        loggedInUser.value = -1
+    }
+}
+
+// Always need to follow this call with a check for logged in user to route to /login if user not valid
+export const refreshData = async (gmail: String) => {
     console.log('Refreshing Data...')
+    await fetchLoggedInUser(gmail)
     await fetchHouseholdData()
     await fetchUserData()
     await fetchFoodData()
