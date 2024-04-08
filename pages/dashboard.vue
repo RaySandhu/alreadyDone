@@ -35,6 +35,10 @@ const { data } = useAuth();
         }
     ]
 
+    const printUser = () => {
+        console.log(data.value)
+    }
+
 </script>
 
 <template>
@@ -42,6 +46,7 @@ const { data } = useAuth();
         <h1 class="font-museoModerno text-lg">
             Dashboard - Welcome {{ data?.user?.name }}
         </h1>
+        <v-btn @click="printUser()"></v-btn>
         <!-- Panel for logging food/fruits. Admins have button to add and throw out/ delete items -->
         <Food />
 
