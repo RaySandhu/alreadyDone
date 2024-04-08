@@ -1,8 +1,10 @@
 <template>
     <div>
-        <v-btn @click="refreshData()">
+        <v-btn @click="refreshData(data!.user?.email!)">
                 Refresh Cached Data
-            </v-btn>
+        </v-btn>
+        <v-btn @click="printCurrentUser()"> Get LoggedInUser </v-btn>
+
         <h2 style=" margin-top: 10px; margin-bottom: 10px;">
             Get testing for household 5
         </h2>
@@ -109,8 +111,12 @@
 
 <script setup lang="ts">
 // calling this at the start of our application can cache all the data we will query to make things faster.
-await refreshData()
-// !!! Should store a householdID in state for currently logged in user.
+const { data } = useAuth();
+
+await refreshData(data.value?.user?.email!)
+if(loggedInUser.value == -1) {
+    navigateTo('/login')
+}
 
 const testCreateReward : Reward = {
     'rID' : null,
@@ -138,7 +144,7 @@ const testCreateUser:User = {
     'dob'           : new Date('1998-06-25'),
     'pointsEarned'  : 0,
     'googleAuth'    : 'TestGoogle',
-    'PorCFlag'      : 'P',
+    'PorCFlag'      : 1,
     'hID'           : 5,
 }
 // Update these values to see the changes in user 5
@@ -149,7 +155,7 @@ const testUpdateUser:User = {
         "dob": new Date('1998-06-25'),
         "pointsEarned": 0,
         "googleAuth": "TestGoogle",
-        "PorCFlag": "P",
+        "PorCFlag": 1,
         "hID": 5
 }
 
@@ -188,6 +194,10 @@ const testThrowFood : TrashBin = {
     'uID' : 5,
     'dateDiscarded' : new Date()
 }
+
+const printCurrentUser = () => {
+        console.log(loggedInUser.value)
+    }
 
 const printHouseholds = () => {
     console.log(householdData.value.data)

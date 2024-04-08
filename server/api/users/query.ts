@@ -35,6 +35,25 @@ async function getUser(uID : number, hID : number) {
       }
     }
   }
+
+  async function getUserByAuth(email : String, hID : number) {
+    const connection = await dbConnect();
+
+    try {
+        let sql = `SELECT * FROM Users WHERE \`Google Auth\` = ?`;
+        const params: String[] = [email];
+        const [results] = await connection.query(sql, params);
+        console.log(sql)
+        return results;
+
+    } catch (err) {
+        console.error('Error:', err);
+        throw err;
+
+    } finally {
+      await connection.end();
+    }
+  }
   
   async function updateUser(updatedInfo:User) {
     const connection = await dbConnect();
@@ -92,17 +111,30 @@ async function getUser(uID : number, hID : number) {
     export default defineEventHandler(async (event) => {
       const method = event.method
       const query = getQuery(event)
-      const uID = parseInt(query.uID!.toString()) as number
+      const uID = query.uID ? parseInt(query.uID!.toString()) as number : -1
       const hID = parseInt(query.hID!.toString()) as number
+      const email = query.email as String
+
+      console.log(uID, hID, email)
       
       switch (method) {
         case 'GET':
-          try {
-            const users = await getUser(uID, hID);
-            return { data: users };
-          } catch (error:any) {
-            console.error(error); 
-            return { error: 'Failed to fetch user data', details: error.message };
+          if (uID != -1) {
+            try {
+              const users = await getUser(uID, hID);
+              return { data: users };
+            } catch (error:any) {
+              console.error(error); 
+              return { error: 'Failed to fetch user data', details: error.message };
+            }
+          } else {
+            try {
+              const users = await getUserByAuth(email, hID);
+              return { data: users };
+            } catch (error:any) {
+              console.error(error);
+              return { error: 'Failed to fetch user data', details: error.message };
+            }
           }
         case 'POST':
           const body = await readBody(event)

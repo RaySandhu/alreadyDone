@@ -1,10 +1,16 @@
 <script setup lang="ts">
+// @ts-ignore
 import type { ConsumedFood, RedeemedReward } from '~/server/utils/entityTypes';
 
-
 const { data } = useAuth();
+await refreshData(data.value?.user?.email!)
+if(loggedInUser.value == -1) {
+    navigateTo('/login')
+}
+
 // NOTE WITH DATES: JANUARY STARTS AT 0, DECEMBER AT 11
 
+    // @ts-ignore
     let loggedFoods:ConsumedFood = [
         {
             'cFoodID' : 1,
@@ -35,6 +41,10 @@ const { data } = useAuth();
         }
     ]
 
+    const printUser = () => {
+        console.log(data.value)
+    }
+
 </script>
 
 <template>
@@ -42,6 +52,7 @@ const { data } = useAuth();
         <h1 class="font-museoModerno text-lg">
             Dashboard - Welcome {{ data?.user?.name }}
         </h1>
+        <v-btn @click="printUser()">Get LoggedInUser</v-btn>
         <!-- Panel for logging food/fruits. Admins have button to add and throw out/ delete items -->
         <Food />
 

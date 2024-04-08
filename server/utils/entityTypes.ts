@@ -11,7 +11,7 @@ export interface User {
     'dob': Date,
     'pointsEarned': number,
     'googleAuth': String,
-    'PorCFlag': String,
+    'PorCFlag': number,
     'hID': number
 }
 
