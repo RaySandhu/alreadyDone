@@ -5,13 +5,14 @@ export async function createFood(foodInfo: Food) {
       method: 'post',
       body: {
         'fID' : null,           // need to run a check to see if food already exists?
-        'Name' : foodInfo.name,
+        'name' : foodInfo.name,
         'pointValue' : foodInfo.pointValue,
         'quantity' : foodInfo.quantity,
         'hID' : foodInfo.hID,
       }
     })
     console.log(res)
+    
     console.log(foodInfo, foodInfo.hID)
 }
 

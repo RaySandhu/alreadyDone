@@ -12,6 +12,7 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
     const pointValue = ref('');
     const quantity = ref('');
     const formFeedback: Ref<FormFeedbackType> = ref(null);
+    console.log(foodData.value.data[0], 'food')
     
     // let newFood:Food = {
     //     'fID' : null,
@@ -28,6 +29,7 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
             return;
         }
         const firstUser = loggedInUser.value[0];
+
         const HID = firstUser['H-ID']
         const newFood: Food = {
         fID: null,
@@ -48,6 +50,7 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
         quantity.value = '';
         addFood.value = false;
         console.log("Food created successfully:", newFood);
+        console.log(foodData.value, 'hiya')
     } catch (error) {
         console.error("Failed to create food:", error);
         formFeedback.value = 'error';
@@ -100,7 +103,13 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
     },
     ];
 
+    const log = (value) => {
+  console.log(value, 'hiiiii')
+  return value
+}
+
 </script>
+
 
 <template>
     <div class="my-8 w-full shadow-xl">
@@ -110,7 +119,7 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
         </div>
         <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
             <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="foodItem in foodData.value" :key="foodItem.fID">
+                <div v-for="foodItem in foodData.data" :key="foodItem.fID">
                     <FCard :food="foodItem" />
                 </div>
             </div>
