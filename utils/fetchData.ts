@@ -13,24 +13,24 @@ export const fetchHouseholdData = async () => {
     const response = await $fetch('/api/household/0');
     householdData.value = response
 };
-export const fetchUserData = async () => {
-    const response = await getAllUsersInHousehold(5); // change this to currently logged in hID using user info on log in
+export const fetchUserData = async (hID : number) => {
+    const response = await getAllUsersInHousehold(hID); // change this to currently logged in hID using user info on log in
     userData.value = response
 };
-export const fetchFoodData = async () => {
-    const response = await getAllFoodInHousehold(5); // change this to currently logged in hID using user info on log in
+export const fetchFoodData = async (hID : number) => {
+    const response = await getAllFoodInHousehold(hID); // change this to currently logged in hID using user info on log in
     foodData.value = response
 };
-export const fetchRewardsData = async () => {
-    const response = await getAllRewardsInHousehold(5)
+export const fetchRewardsData = async (hID : number) => {
+    const response = await getAllRewardsInHousehold(hID)
     rewardsData.value = response
 };
-export const fetchConsumedFoodData = async () => {
-    const response = await getConsumedFoodForUser(5)
+export const fetchConsumedFoodData = async (uID : number) => {
+    const response = await getConsumedFoodForUser(uID)
     consumedFoodData.value = response
 };
-export const fetchObtainedRewardsData = async () => {
-    const response = await getObtainedRewardForUser(5)
+export const fetchObtainedRewardsData = async (uID : number) => {
+    const response = await getObtainedRewardForUser(uID)
     obtainedRewardData.value = response
 };
 export const fetchTrashData = async () => {
@@ -51,12 +51,14 @@ export const fetchLoggedInUser = async (email : String) => {
 export const refreshData = async (gmail: String) => {
     console.log('Refreshing Data...')
     await fetchLoggedInUser(gmail)
+    const firstUser = loggedInUser.value[0]; 
+    console.log("First user in loggedInUser.value:",firstUser['User-ID'])
     await fetchHouseholdData()
-    await fetchUserData()
-    await fetchFoodData()
-    await fetchRewardsData()
+    await fetchUserData(firstUser['H-ID'])
+    await fetchFoodData(firstUser['H-ID'])
+    await fetchRewardsData(firstUser['H-ID'])
     await fetchTrashData()
-    await fetchConsumedFoodData()
-    await fetchObtainedRewardsData()
+    await fetchConsumedFoodData(firstUser['User-ID'])
+    await fetchObtainedRewardsData(firstUser['User-ID'])
     console.log('Refresh complete!')
 }

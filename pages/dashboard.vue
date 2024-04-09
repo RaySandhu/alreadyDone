@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // @ts-ignore
 import type { ConsumedFood, RedeemedReward } from '~/server/utils/entityTypes';
+import { refreshData, foodData, rewardsData, consumedFoodData, obtainedRewardData } from '../utils/fetchData'
 
 const { data } = useAuth();
 await refreshData(data.value?.user?.email!)

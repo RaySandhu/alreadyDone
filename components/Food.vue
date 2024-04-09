@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import FCard from '~/components/FCard.vue';
 import type { Food } from '~/server/utils/entityTypes';
+import { foodData, loggedInUser }  from '../utils/fetchData'
 
-    type FormFeedbackType = 'incomplete' | 'success' | null;
+    type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
 
     const { data } = useAuth();
     
@@ -12,13 +13,13 @@ import type { Food } from '~/server/utils/entityTypes';
     const quantity = ref('');
     const formFeedback: Ref<FormFeedbackType> = ref(null);
     
-    let newFood:Food = {
-        'fID' : null,
-        'name' : name.value,
-        'pointValue' : Number(pointValue.value),
-        'quantity' : Number(quantity.value),
-        'hID' : 1,
-    }
+    // let newFood:Food = {
+    //     'fID' : null,
+    //     'name' : name.value,
+    //     'pointValue' : Number(pointValue.value),
+    //     'quantity' : Number(quantity.value),
+    //     'hID' : loggedInUser.value['H-ID'],
+    // }
     const submitFood = async () => {
         formFeedback.value= null;
 
@@ -26,20 +27,45 @@ import type { Food } from '~/server/utils/entityTypes';
             formFeedback.value = 'incomplete';
             return;
         }
+        const firstUser = loggedInUser.value[0];
+        const HID = firstUser['H-ID']
+        const newFood: Food = {
+        fID: null,
+        name: name.value,
+        pointValue: Number(pointValue.value),
+        quantity: Number(quantity.value),
+        hID:  HID,
+            };
 
-        formFeedback.value = 'success'
+        console.log(newFood)
 
-        newFood.name = name.value;
-        newFood.pointValue = Number(pointValue.value);
-        newFood.quantity = Number(quantity.value);
-
-        name.value='';
-        pointValue.value='';
-        quantity.value='';
-        
+            try {
+        await createFood(newFood);
+        formFeedback.value = 'success';
+        // Clear the form
+        name.value = '';
+        pointValue.value = '';
+        quantity.value = '';
         addFood.value = false;
-        console.log(newFood);
+        console.log("Food created successfully:", newFood);
+    } catch (error) {
+        console.error("Failed to create food:", error);
+        formFeedback.value = 'error';
     }
+
+    //     formFeedback.value = 'success'
+
+    //     newFood.name = name.value;
+    //     newFood.pointValue = Number(pointValue.value);
+    //     newFood.quantity = Number(quantity.value);
+
+    //     name.value='';
+    //     pointValue.value='';
+    //     quantity.value='';
+        
+    //     addFood.value = false;
+    //     console.log(newFood);
+     };
 
     let tempFoods:Food = [{
         'fID' : 1,
@@ -84,8 +110,8 @@ import type { Food } from '~/server/utils/entityTypes';
         </div>
         <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
             <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="tempFood in tempFoods">
-                    <FCard :food="tempFood" />
+                <div v-for="foodItem in foodData.value" :key="foodItem.fID">
+                    <FCard :food="foodItem" />
                 </div>
             </div>
         </div>
