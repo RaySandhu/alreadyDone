@@ -113,18 +113,24 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
 
 <template>
     <div class="my-8 w-full shadow-xl">
-        <div class = "flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
-            <h1 class="font-museoModerno">Log Food</h1>
-            <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addFood = true"></v-btn>
-        </div>
-        <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
-            <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="foodItem in foodData.data" :key="foodItem.fID">
-                    <FCard :food="foodItem" />
-                </div>
-            </div>
-        </div>
+    <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+      <h1 class="font-museoModerno">Log Food</h1>
+      <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addFood = true"></v-btn>
     </div>
+    <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+      <div class="flex flex-row overflow-y-auto mx-2">
+        <div v-for="foodItem in foodData.data" :key="foodItem['Food-ID']">
+          <FCard :food="{
+            fID: foodItem['Food-ID'],
+            name: foodItem.Name,
+            pointValue: foodItem['Point value'],
+            quantity: foodItem.Quantity,
+            hID: foodItem['H-ID']
+          }" />
+        </div>
+      </div>
+    </div>
+  </div>
 
     <v-dialog v-model="addFood">
         <div class="flex justify-center align-center">
