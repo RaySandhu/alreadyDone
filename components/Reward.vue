@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Reward } from '~/server/utils/entityTypes';
+import { loggedInUser, rewardsData } from '../utils/fetchData';
 
 
-    type FormFeedbackType = 'incomplete' | 'success' | null;
+    type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
 
     const { data } = useAuth();
     
@@ -13,62 +14,67 @@ import type { Reward } from '~/server/utils/entityTypes';
     const status = ref('')
     const formFeedback: Ref<FormFeedbackType> = ref(null);
     
-    let newReward:Reward = {
-        'rID' : null,
-        'name' : name.value,
-        'pointsNeeded' : Number(pointsNeeded.value),
-        'description' : description.value,
-        'status' : Number(status.value),
-        'hID' : 1,
+        const firstUser = loggedInUser.value[0];
+const HID = firstUser['H-ID'];
+
+const submitReward = async () => {
+    formFeedback.value = null;
+
+    if (!name.value.trim() || !pointsNeeded.value.trim() || !description.value.trim()) {
+        formFeedback.value = 'incomplete';
+        return;
     }
-    const submitReward = async () => {
-        formFeedback.value= null;
 
-        if(!name.value.trim() || !pointsNeeded.value.trim() || !description.value.trim() || !status.value.trim()){
-            formFeedback.value = 'incomplete';
-            return;
-        }
+    const newReward: Reward = {
+        rID: null,
+        name: name.value,
+        pointsNeeded: Number(pointsNeeded.value),
+        description: description.value,
+        status: Number(status.value), // Adjust based on your status field type
+        hID: HID,
+    };
 
-        formFeedback.value = 'success'
-
+    try {
+        await createReward(newReward);
+        formFeedback.value = 'success';
+        // Clear the form
+        name.value = '';
+        pointsNeeded.value = '';
+        description.value = '';
+        status.value = '';
         addReward.value = false;
-        console.log(newReward);
+        console.log("Reward created successfully:", newReward);
+    } catch (error) {
+        console.error("Failed to create reward:", error);
+        formFeedback.value = 'error';
     }
+};
 
-    let tempRewards:Reward = [
-        {
-            'rID' : 1,
-            'name' : "Movie",
-            'pointsNeeded' : 500,
-            'description' : "Redeemable for 1 movie trip.",
-            'status' : 0,
-            'hID' : 1,
-        },{
-            'rID' : 2,
-            'name' : "Chocolate Bar",
-            'pointsNeeded' : 50,
-            'description' : "Redeemable for one chocolate bar to eat.",
-            'status' : 0,
-            'hID' : 1,
-        }
-    ]
+
 
 </script>
 
 <template>
     <div class="my-8 w-full shadow-xl">
-        <div class = "flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
-            <h1 class="font-museoModerno">Rewards</h1>
-            <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
-        </div>
-        <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
-            <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="tempReward in tempRewards">
-                    <RCard :reward="tempReward" />
-                </div>
-            </div>
-        </div>
+    <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+      <h1 class="font-museoModerno">Rewards</h1>
+      <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
     </div>
+    <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+      <div class="flex flex-row overflow-y-auto mx-2">
+        <div v-for="rewardItem in rewardsData.data" :key="rewardItem['Reward-ID']">
+          <RCard :reward="{
+            rID: rewardItem['Reward-ID'],
+            name: rewardItem.Name,
+            pointsNeeded: rewardItem['Points needed'],
+            description: rewardItem.Description,
+            status: rewardItem.Status,
+            hID: rewardItem['H-ID']
+          }" />
+        </div>
+      </div>
+    </div>
+  </div>
 
     <v-dialog v-model="addReward">
         <div class="flex justify-center align-center">

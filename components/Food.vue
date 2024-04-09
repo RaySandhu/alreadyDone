@@ -14,13 +14,7 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
     const formFeedback: Ref<FormFeedbackType> = ref(null);
     console.log(foodData.value.data[0], 'food')
     
-    // let newFood:Food = {
-    //     'fID' : null,
-    //     'name' : name.value,
-    //     'pointValue' : Number(pointValue.value),
-    //     'quantity' : Number(quantity.value),
-    //     'hID' : loggedInUser.value['H-ID'],
-    // }
+
     const submitFood = async () => {
         formFeedback.value= null;
 
@@ -56,57 +50,12 @@ import { foodData, loggedInUser }  from '../utils/fetchData'
         formFeedback.value = 'error';
     }
 
-    //     formFeedback.value = 'success'
-
-    //     newFood.name = name.value;
-    //     newFood.pointValue = Number(pointValue.value);
-    //     newFood.quantity = Number(quantity.value);
-
-    //     name.value='';
-    //     pointValue.value='';
-    //     quantity.value='';
-        
-    //     addFood.value = false;
-    //     console.log(newFood);
+  
      };
 
-    let tempFoods:Food = [{
-        'fID' : 1,
-        'name' : "bananas",
-        'pointValue' : 10,
-        'quantity' : 10,
-        'hID' : 1,
-    },{
-        'fID' : 2,
-        'name' : "apples",
-        'pointValue' : 15,
-        'quantity' : 8,
-        'hID' : 1,
-    },{
-        'fID' : 3,
-        'name' : "carrots",
-        'pointValue' : 5,
-        'quantity' : 6,
-        'hID' : 1,
-    },{
-        'fID' : 4,
-        'name' : "brussel sprouts",
-        'pointValue' : 15,
-        'quantity' : 1,
-        'hID' : 1,
-    },{
-        'fID' : 5,
-        'name' : "honeydue",
-        'pointValue' : 20,
-        'quantity' : 2,
-        'hID' : 1,
-    },
-    ];
 
-    const log = (value) => {
-  console.log(value, 'hiiiii')
-  return value
-}
+
+
 
 </script>
 
