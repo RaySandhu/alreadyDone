@@ -18,12 +18,12 @@ export async function updateReward(rewardInfo:Reward) {
   const res = await $fetch(`/api/reward/query?rID=0&hID=0`, {
     method: 'post',
     body: {
-        'R-ID' : rewardInfo.rID,
-        'Name' : rewardInfo.name,
-        'Points needed' : rewardInfo.pointsNeeded,
-        'Description' : rewardInfo.description,
-        'Status' : rewardInfo.status,
-        'H-ID' : rewardInfo.hID,
+        'rID' : rewardInfo.rID,
+        'name' : rewardInfo.name,
+        'pointsNeeded' : rewardInfo.pointsNeeded,
+        'description' : rewardInfo.description,
+        'status' : rewardInfo.status,
+        'hID' : rewardInfo.hID,
     }
   })
 
