@@ -57,8 +57,10 @@ export const refreshData = async (gmail: String) => {
     await fetchUserData(firstUser['H-ID'])
     await fetchFoodData(firstUser['H-ID'])
     await fetchRewardsData(firstUser['H-ID'])
+    console.log(rewardsData, 'rewards data')
     await fetchTrashData()
     await fetchConsumedFoodData(firstUser['User-ID'])
     await fetchObtainedRewardsData(firstUser['User-ID'])
+    console.log(obtainedRewardData, 'obtained stuff')
     console.log('Refresh complete!')
 }

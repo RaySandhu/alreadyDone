@@ -64,7 +64,7 @@ const submitReward = async () => {
       <div class="flex flex-row overflow-y-auto mx-2">
         <div v-for="rewardItem in rewardsData.data" :key="rewardItem['Reward-ID']">
           <RCard :reward="{
-            rID: rewardItem['Reward-ID'],
+            rID: rewardItem['R-ID'],
             name: rewardItem.Name,
             pointsNeeded: rewardItem['Points needed'],
             description: rewardItem.Description,

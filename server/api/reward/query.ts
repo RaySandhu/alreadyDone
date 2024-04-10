@@ -38,7 +38,7 @@ async function getReward(rID : number, hID : number) {
 
   async function updateReward(updatedInfo:Reward) {
     const connection = await dbConnect();
-    console.log(updatedInfo);
+    console.log(updatedInfo.name, 'here it is');
     try {
       let sql = `UPDATE Reward
                  SET 
@@ -57,6 +57,7 @@ async function getReward(rID : number, hID : number) {
   
       const [results] = await connection.query(sql, params);
       console.log(sql, params);
+      console.log(updatedInfo.name, 'update api')
       return results;
     } catch (err) {
       console.error('Error:', err);

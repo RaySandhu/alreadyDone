@@ -11,11 +11,13 @@ export async function obtainReward(rewardInfo: Reward, userInfo: User) {
       body: {
         'redeemID' : rewardInfo.rID,
         'date' : new Date(),
-        'uID' : userInfo.uID,
+        'uID' : userInfo['User-ID'],
       }
     })
     updateUserPoints(userInfo, -1 * rewardInfo.pointsNeeded) 
-  
+    console.log(userInfo, 'yeah')
+    console.log(rewardInfo.rID, 'reward id')
+    console.log(userInfo['User-ID'], 'user id!')
     console.log(res)
 }
 

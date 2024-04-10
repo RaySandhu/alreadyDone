@@ -5,46 +5,50 @@ import { refreshData, foodData, rewardsData, consumedFoodData, obtainedRewardDat
 
 const { data } = useAuth();
 await refreshData(data.value?.user?.email!)
-if(loggedInUser.value == -1) {
+if (loggedInUser.value == -1) {
     navigateTo('/login')
 }
 
 // NOTE WITH DATES: JANUARY STARTS AT 0, DECEMBER AT 11
 
-    // @ts-ignore
-    let loggedFoods:ConsumedFood = [
-        {
-            'cFoodID' : 1,
-            'dateOfConsumption' : new Date(2023, 11, 29),
-            'uID' : 1,
-        },
-        {
-            'cFoodID' : 2,
-            'dateOfConsumption' : new Date(2024, 0, 3),
-            'uID' : 1,
-        },{
-            'cFoodID' : 3,
-            'dateOfConsumption' : new Date(2024, 1, 14),
-            'uID' : 1,
-        },
-        {
-            'cFoodID' : 4,
-            'dateOfConsumption' : new Date(2024, 2, 20),
-            'uID' : 1,
-        }
-    ]
+// @ts-ignore
+// let loggedFoods:ConsumedFood = [
+//     {
+//         'cFoodID' : 1,
+//         'dateOfConsumption' : new Date(2023, 11, 29),
+//         'uID' : 1,
+//     },
+//     {
+//         'cFoodID' : 2,
+//         'dateOfConsumption' : new Date(2024, 0, 3),
+//         'uID' : 1,
+//     },{
+//         'cFoodID' : 3,
+//         'dateOfConsumption' : new Date(2024, 1, 14),
+//         'uID' : 1,
+//     },
+//     {
+//         'cFoodID' : 4,
+//         'dateOfConsumption' : new Date(2024, 2, 20),
+//         'uID' : 1,
+//     }
+// ]
 
-    let redeemed:RedeemedReward = [
-        {
-            'reedemID' : 1,
-            'date' : new Date(2024, 0, 22),
-            'uID' : 1,
-        }
-    ]
+// let redeemed:RedeemedReward = [
+//     {
+//         'reedemID' : 1,
+//         'date' : new Date(2024, 0, 22),
+//         'uID' : 1,
+//     }
+// ]
 
-    const printUser = () => {
-        console.log(data.value)
-    }
+// const printUser = () => {
+//     console.log(data.value)
+// }
+const log = (value) => {
+  console.log(value, 'hiiiii')
+  return value
+}
 
 </script>
 
@@ -62,13 +66,17 @@ if(loggedInUser.value == -1) {
 
         <!--Logged foods history -->
         <div class="my-8 w-full shadow-xl">
-            <div class = "flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+            <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
                 <h1 class="font-museoModerno">Logged Foods</h1>
             </div>
-            <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+            <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
                 <div class="flex flex-row overflow-y-auto mx-2">
-                    <div v-for="lFood in loggedFoods">
-                        <LFCard :food="lFood" />
+                    <div v-for="lFood in consumedFoodData.data" :key="lFood.cFoodID">
+                        <LFCard :food="{
+                cFoodID: lFood.cFoodID,
+                dateOfConsumption: lFood.dateOfConsumption,
+                uID: lFood.uID
+            }" />
                     </div>
                 </div>
             </div>
@@ -76,17 +84,21 @@ if(loggedInUser.value == -1) {
 
         <!-- Redeemed rewards history -->
         <div class="my-8 w-full shadow-xl">
-            <div class = "flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+            <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
                 <h1 class="font-museoModerno">Redeemed Rewards</h1>
             </div>
-            <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+            <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
                 <div class="flex flex-row overflow-y-auto mx-2">
-                    <div v-for="rr in redeemed">
-                        <RRCard :reward="rr" />
+                    <div v-for="redReward in obtainedRewardData.data" :key="redReward['ReedemID']">
+                        <RRCard :reward="{
+                redeemID: log(redReward['ReedemID']),
+                date: redReward['Date'],
+                uID: redReward['U-ID']
+            }" />
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 </template>

@@ -77,7 +77,7 @@ export async function updateUserPoints(userInfo:User, pointValue: number) {
     method: 'post',
     body: {
       ...userInfo,
-      'Points earned' : userInfo.pointsEarned + pointValue,
+      'pointsEarned' : userInfo.pointsEarned + pointValue,
     }
   })
   console.log(res)

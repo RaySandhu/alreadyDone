@@ -1,30 +1,131 @@
 <script setup lang="ts">
-import type { Reward } from '~/server/utils/entityTypes';
+import type { Reward, User } from '~/server/utils/entityTypes';
+import { loggedInUser, rewardsData } from '../utils/fetchData';
 // Use: import 1 reward from DB connection for this component
 
-const props = defineProps<{ 
-    reward: Reward
+type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
+
+const props = defineProps<{
+  reward: Reward,
+  user: User
 }>()
 
-const { reward } = props;
+
+
 const isOpen = ref(false);
 const del = ref(false);
 const edit = ref(false);
+const formFeedback: Ref<FormFeedbackType> = ref(null);
 
-const name = reward.name;
-const pointsNeeded = reward.pointsNeeded;
+
+const name = computed(() => props.reward.name);
+const reward = computed(() => props.reward);
+const pointsNeeded = computed(() => props.reward.pointsNeeded);
+const editableReward = ref({} as Reward);
+
+function openEditDialog() {
+  editableReward.value = JSON.parse(JSON.stringify(props.reward));
+  edit.value = true;
+}
 
 const logReward = async () => {
-    console.log(reward);
+    formFeedback.value = null;
+    console.log(reward.value.rID, 'rewarddd id');
     isOpen.value=false;
+
+
+
+    try {
+        
+        const newReward: Reward = {
+        rID: reward.value.rID,
+        name: reward.value.name,
+        pointsNeeded: Number(pointsNeeded.value),
+        description: reward.value.description,
+        status: Number(reward.value.status), 
+        hID: reward.value.hID
+        };
+
+    
+
+
+      
+    
+        console.log(reward.value.rID, 'hiya')
+        console.log(loggedInUser.value[0]['User-ID'], 'yello')
+        console.log(newReward, 'awesome')
+        await obtainReward(newReward, loggedInUser.value[0]);
+
+    
+
+        formFeedback.value = 'success';
+        console.log("Reward logged:", reward.value);
+        console.log("User:", loggedInUser.value[0])
+        
+        // Optionally reset state or close modal
+        isOpen.value = false;
+    } catch (error) {
+        console.error("Failed to log reward:", error);
+        formFeedback.value = 'error';
+    }
 }
 
 const delReward = async () => {
-    del.value = false;
+    try {
+        const rewardToDelID = reward.value.rID
+
+        const response = await deleteReward(rewardToDelID);
+        console.log("Reward deleted:", response);
+        
+
+        formFeedback.value = 'success'; 
+        del.value = false; 
+
+    } catch (error) {
+        console.error("Failed to delete reward:", error);
+        formFeedback.value = 'error'; // Show error feedback to the user
+    }
 }
 
 const editReward = async () => {
-    edit.value = false;
+    formFeedback.value = null;
+    console.log(reward.value.rID, 'rewarddd id');
+    isOpen.value=false;
+
+
+
+    try {
+        
+        const upReward: Reward = {
+        rID: reward.value.rID,
+        name: editableReward.value.name,
+        pointsNeeded: Number(editableReward.value.pointsNeeded),
+        description: reward.value.description,
+        status: Number(reward.value.status), 
+        hID: reward.value.hID
+        };
+
+    
+
+
+      
+    
+        console.log(upReward.name, 'update!')
+        console.log(upReward, 'upreward')
+        await updateReward(upReward);
+
+    
+
+        formFeedback.value = 'success';
+        console.log("Reward updated:", reward.value);
+    
+        
+    
+        isOpen.value = false;
+    } catch (error) {
+        console.error("Failed to update reward:", error);
+        formFeedback.value = 'error';
+    }
 }
 
 </script>
@@ -101,9 +202,9 @@ const editReward = async () => {
                             <div class="h-1 w-full my-2 bg-money-100"></div>
                             <form class="flex flex-col">
                                 <p class="font-museoModerno mt-4"> Reward Name: </p>
-                                <input v-model="name" placeholder="bananas" class="hover:bg-gray-200 px-2"/>
+                                <input v-model="editableReward.name" placeholder="bananas" class="hover:bg-gray-200 px-2"/>
                                 <p class="font-museoModerno mt-4"> Point Value: </p>
-                                <input v-model="pointsNeeded" placeholder="10" class="hover:bg-gray-200 px-2"/>
+                                <input v-model="editableReward.pointsNeeded" placeholder="10" class="hover:bg-gray-200 px-2"/>
                             </form>
                         </div>
                     </v-card-item>
