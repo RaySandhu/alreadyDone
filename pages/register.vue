@@ -3,6 +3,11 @@
 
     const { data } = useAuth();
 
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value != -1) {
+        navigateTo('/dashboard')
+    }
+
     type FormFeedbackType = 'incomplete' | 'invalid household ID' | 'invalid DOB' | 'success' | null;
 
     const name = ref('');

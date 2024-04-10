@@ -10,6 +10,8 @@ import { loggedInUser } from '~/utils/fetchData';
 
     const firstUser = loggedInUser.value[0];
     const HName = currentHouse.value.data[0].Name;
+    const numRewards = obtainedRewardData.value.length || 0;
+    const numFood = consumedFoodData.value.length || 0;
 
    const profilePic = data.value?.user?.image;
    const name = ref("");
@@ -45,7 +47,7 @@ import { loggedInUser } from '~/utils/fetchData';
             hID: firstUser['H-ID']
         }
         updateUser(tempUpdate);
-        location.replace(location.href);
+        firstUser['PorC-Flag'] = porc ? "":"P";
    }
 
    const editProfile = ref(false);
@@ -62,8 +64,9 @@ import { loggedInUser } from '~/utils/fetchData';
             hID: firstUser['H-ID']
         }
         updateUser(tempUpdate);
-        console.log(currentHouse.value.data[0].Name);
-        console.log(loggedInUser);
+        firstUser['Fname'] = tempUpdate.fName;
+        firstUser['Lname'] = tempUpdate.lName;
+        //firstUser['DOB'] = tempUpdate.dob.toLocaleDateString;
     }
 
 </script>
@@ -82,7 +85,7 @@ import { loggedInUser } from '~/utils/fetchData';
         <div class="my-4 flex flex-row align-center">
             <img class="h-12 align-self-start mr-5 img-thumbnail rounded-circle" :src="profilePic!" alt="Profile pic">
             <h2 class="font-museoModerno text-amour-300 text-2xl">
-                User Name
+                {{ firstUser['Fname'] }} {{ firstUser['Lname'] }}
             </h2>
         </div>
         <div class="font-museoModerno text-blue text-xl">
@@ -107,11 +110,11 @@ import { loggedInUser } from '~/utils/fetchData';
             </h1>
             <!-- Number of rewards redeemed -->
             <h1>
-                Lifetime rewards redeemed:
+                Lifetime rewards redeemed: {{ numRewards }}
             </h1>
             <!-- Number of food items logged -->
             <h1>
-                Lifetime foods logged: 
+                Lifetime foods logged: {{ numFood }}
             </h1>
         </div>
         <div class="mt-10 w-full flex flex-col">
