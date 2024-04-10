@@ -23,6 +23,9 @@ import type { log } from 'console';
     const createH = ref(false);
 
     const swi = ref(false);
+    
+    /* 
+    FOR FUTURE: ability to switch household
     const switchHouse = async () => {
         if(createH.value){ //Household being created
             if(!houseName.value.trim()){
@@ -71,6 +74,7 @@ import type { log } from 'console';
         users = userData.value.data;
         console.log("Switch household");
     }
+    */
 
     const del = ref(false);
     const delHouse = async () => {
@@ -100,7 +104,7 @@ import type { log } from 'console';
         </div>
         <div class="mt-10 w-full flex flex-col">
             <!-- Button to change which househole you are in -->
-            <v-btn class="my-5" @click="swi = true"> Change Household </v-btn>
+            <v-btn v-if="swi" class="my-5" @click="swi = true"> Change Household </v-btn>
             <!-- Button to permanently delete household (and all users inside). Must have warning that you cannot undo. -->
             <v-btn v-if="parent" color="red" @click="del = true"> Delete Household and Users </v-btn>
         </div>
