@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import type { Food } from '~/server/utils/entityTypes';
+import type { Food, User } from '~/server/utils/entityTypes';
 // Use: import 1 food from DB connection for this component
 
+type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
+
+
 const props = defineProps<{ 
-    food: Food
+    food: Food,
+    user: User
 }>()
 
+const { data } = useAuth();
 const { food } = props;
 const isOpen = ref(false);
 const del = ref(false);
@@ -13,14 +18,59 @@ const edit = ref(false);
 
 const name = food.name;
 const pointValue = food.pointValue;
+const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+
+const editableFood = ref({} as Food);
+
 
 const logFood = async () => {
-    console.log(food);
+    formFeedback.value = null;
     isOpen.value=false;
+
+    try {
+        // Create Food object to be passed into consumeFood
+        const newFood: Food = {
+        fID : food.fID,
+        name : food.name,
+        pointValue : food.pointValue,
+        quantity : food.quantity,
+        hID : food.hID
+        };
+
+
+        await consumeFood(newFood, loggedInUser.value[0]);
+
+        // Refresh Data
+        await refreshData(data.value?.user?.email!)
+        formFeedback.value = 'success';
+      
+        
+        // close modal
+        isOpen.value = false;
+    } catch (error) {
+        console.error("Failed to consume food:", error);
+        formFeedback.value = 'error';
+    }
+
 }
 
 const delFood = async () => {
-    del.value = false;
+    try {
+        const foodToDelID = food.fID
+
+        const response = await deleteFood(foodToDelID);
+        console.log("Reward deleted:", response);
+
+        // Refresh data
+        await refreshData(data.value?.user?.email!)
+        formFeedback.value = 'success';
+        del.value = false;
+
+    } catch (error) {
+        console.error("Failed to delete reward:", error);
+        formFeedback.value = 'error'; 
+    }
 }
 
 const editFood = async () => {

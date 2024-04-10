@@ -22,12 +22,12 @@ const { reward } = props;
         
         <!-- Food name -->
         <div class="flex flex-col justify-center align-center h-2/3">
-            <h2 class="text-xl text-money-500">{{ reward.redeemID }} - Reward Name</h2>
-            <p class="text-sm text-money-300 text-center p-2">Redeemed reward</p>
+            <h2 class="text-xl text-money-500">Reward ID - {{ reward.redeemID }} </h2>
+            <!-- <p class="text-sm text-money-300 text-center p-2">Redeemed reward</p> -->
             <!-- Date added: YYYY-MM-DD -->
             <div class="text-center text-money-300">
                 <!-- <p>Redeemed {{ reward.date.toLocaleDateString() }}</p> -->
-                <p>For xxx Points</p>
+                <!-- <p>For xxx Points</p> -->
             </div>
         </div>
     </div>

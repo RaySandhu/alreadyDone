@@ -9,46 +9,6 @@ if (loggedInUser.value == -1) {
     navigateTo('/login')
 }
 
-// NOTE WITH DATES: JANUARY STARTS AT 0, DECEMBER AT 11
-
-// @ts-ignore
-// let loggedFoods:ConsumedFood = [
-//     {
-//         'cFoodID' : 1,
-//         'dateOfConsumption' : new Date(2023, 11, 29),
-//         'uID' : 1,
-//     },
-//     {
-//         'cFoodID' : 2,
-//         'dateOfConsumption' : new Date(2024, 0, 3),
-//         'uID' : 1,
-//     },{
-//         'cFoodID' : 3,
-//         'dateOfConsumption' : new Date(2024, 1, 14),
-//         'uID' : 1,
-//     },
-//     {
-//         'cFoodID' : 4,
-//         'dateOfConsumption' : new Date(2024, 2, 20),
-//         'uID' : 1,
-//     }
-// ]
-
-// let redeemed:RedeemedReward = [
-//     {
-//         'reedemID' : 1,
-//         'date' : new Date(2024, 0, 22),
-//         'uID' : 1,
-//     }
-// ]
-
-// const printUser = () => {
-//     console.log(data.value)
-// }
-const log = (value) => {
-  console.log(value, 'hiiiii')
-  return value
-}
 
 </script>
 
@@ -71,11 +31,11 @@ const log = (value) => {
             </div>
             <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
                 <div class="flex flex-row overflow-y-auto mx-2">
-                    <div v-for="lFood in consumedFoodData.data" :key="lFood.cFoodID">
+                    <div v-for="lFood in consumedFoodData.data" :key="lFood['CFood-ID']">
                         <LFCard :food="{
-                cFoodID: lFood.cFoodID,
-                dateOfConsumption: lFood.dateOfConsumption,
-                uID: lFood.uID
+                cFoodID: lFood['CFood-ID'],
+                dateOfConsumption: lFood['Date of Consumption'],
+                uID: lFood['U-ID']
             }" />
                     </div>
                 </div>
@@ -91,7 +51,7 @@ const log = (value) => {
                 <div class="flex flex-row overflow-y-auto mx-2">
                     <div v-for="redReward in obtainedRewardData.data" :key="redReward['ReedemID']">
                         <RRCard :reward="{
-                redeemID: log(redReward['ReedemID']),
+                redeemID: redReward['ReedemID'],
                 date: redReward['Date'],
                 uID: redReward['U-ID']
             }" />

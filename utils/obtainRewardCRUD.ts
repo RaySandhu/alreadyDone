@@ -15,10 +15,7 @@ export async function obtainReward(rewardInfo: Reward, userInfo: User) {
       }
     })
     updateUserPoints(userInfo, -1 * rewardInfo.pointsNeeded) 
-    console.log(userInfo, 'yeah')
-    console.log(rewardInfo.rID, 'reward id')
-    console.log(userInfo['User-ID'], 'user id!')
-    console.log(res)
+  
 }
 
 /**

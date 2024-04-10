@@ -13,7 +13,6 @@ export async function createFood(foodInfo: Food) {
     })
     console.log(res)
     
-    console.log(foodInfo, foodInfo.hID)
 }
 
 export async function updateFood(foodInfo:Food) {

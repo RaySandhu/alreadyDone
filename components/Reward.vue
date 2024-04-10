@@ -3,18 +3,18 @@ import type { Reward } from '~/server/utils/entityTypes';
 import { loggedInUser, rewardsData } from '../utils/fetchData';
 
 
-    type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
+type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
 
-    const { data } = useAuth();
-    
-    const addReward = ref(false);
-    const name = ref('');
-    const pointsNeeded = ref('');
-    const description = ref('');
-    const status = ref('')
-    const formFeedback: Ref<FormFeedbackType> = ref(null);
-    
-        const firstUser = loggedInUser.value[0];
+const { data } = useAuth();
+
+const addReward = ref(false);
+const name = ref('');
+const pointsNeeded = ref('');
+const description = ref('');
+const status = ref('')
+const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+const firstUser = loggedInUser.value[0];
 const HID = firstUser['H-ID'];
 
 const submitReward = async () => {
@@ -25,6 +25,7 @@ const submitReward = async () => {
         return;
     }
 
+    //create reward object to be passed into create reward
     const newReward: Reward = {
         rID: null,
         name: name.value,
@@ -36,6 +37,7 @@ const submitReward = async () => {
 
     try {
         await createReward(newReward);
+        await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
         // Clear the form
         name.value = '';
@@ -56,25 +58,25 @@ const submitReward = async () => {
 
 <template>
     <div class="my-8 w-full shadow-xl">
-    <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
-      <h1 class="font-museoModerno">Rewards</h1>
-      <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
-    </div>
-    <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
-      <div class="flex flex-row overflow-y-auto mx-2">
-        <div v-for="rewardItem in rewardsData.data" :key="rewardItem['Reward-ID']">
-          <RCard :reward="{
-            rID: rewardItem['R-ID'],
-            name: rewardItem.Name,
-            pointsNeeded: rewardItem['Points needed'],
-            description: rewardItem.Description,
-            status: rewardItem.Status,
-            hID: rewardItem['H-ID']
-          }" />
+        <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+            <h1 class="font-museoModerno">Rewards</h1>
+            <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
         </div>
-      </div>
+        <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+            <div class="flex flex-row overflow-y-auto mx-2">
+                <div v-for="rewardItem in rewardsData.data" :key="rewardItem['Reward-ID']">
+                    <RCard :reward="{
+                rID: rewardItem['R-ID'],
+                name: rewardItem.Name,
+                pointsNeeded: rewardItem['Points needed'],
+                description: rewardItem.Description,
+                status: rewardItem.Status,
+                hID: rewardItem['H-ID']
+            }" />
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
     <v-dialog v-model="addReward">
         <div class="flex justify-center align-center">
@@ -85,11 +87,12 @@ const submitReward = async () => {
                         <div class="h-1 w-full my-2 bg-money-100"></div>
                         <form class="flex flex-col">
                             <p class="font-museoModerno mt-4"> Reward Name: </p>
-                            <input v-model="name" placeholder="movie" class="hover:bg-gray-200 px-2"/>
+                            <input v-model="name" placeholder="movie" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Point Value: </p>
-                            <input v-model="pointsNeeded" placeholder="100" class="hover:bg-gray-200 px-2"/>
+                            <input v-model="pointsNeeded" placeholder="100" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Description: </p>
-                            <textarea v-model="description" placeholder="description here" class="hover:bg-gray-200 px-2"></textarea>
+                            <textarea v-model="description" placeholder="description here"
+                                class="hover:bg-gray-200 px-2"></textarea>
                         </form>
                     </div>
                 </v-card-item>

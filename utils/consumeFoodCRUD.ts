@@ -7,24 +7,24 @@
  */
 export async function consumeFood(foodInfo: Food, userInfo: User) {
 
-    const res = await $fetch('/api/consumeFood/create', {
-      method: 'post',
-      body: {
-        'cFoodID' : foodInfo.fID,
-        'dateOfConsumption' : new Date(),
-        'uID' : userInfo.uID,
-      }
-    })
-    // rewrite food item with one less available quantity. 
-    const updatedFoodInfo : Food = {
-      ...foodInfo,
-      'quantity' : foodInfo.quantity - 1,
+  const res = await $fetch('/api/consumeFood/create', {
+    method: 'post',
+    body: {
+      'cFoodID': foodInfo.fID,
+      'dateOfConsumption': new Date(),
+      'uID': userInfo['User-ID'],
     }
-    //!! need to protect this following call in success response conditional
-    updateFood(updatedFoodInfo)
-    updateUserPoints(userInfo, foodInfo.pointValue)
-  
-    console.log(res)
+  })
+  // rewrite food item with one less available quantity. 
+  const updatedFoodInfo: Food = {
+    ...foodInfo,
+    'quantity': foodInfo.quantity - 1,
+  }
+  //!! need to protect this following call in success response conditional
+  updateFood(updatedFoodInfo)
+  updateUserPoints(userInfo, foodInfo.pointValue)
+
+  console.log(res)
 }
 
 /**
@@ -34,15 +34,15 @@ export async function consumeFood(foodInfo: Food, userInfo: User) {
  * @param fID 
  * @returns 
  */
-export const getConsumedFoodForUser = async (uID : number,fID : number = 0) => {
+export const getConsumedFoodForUser = async (uID: number, fID: number = 0) => {
   const response = await $fetch(`/api/consumeFood/query?fID=${fID}&uID=${uID}&doe=''`, { // !!! need to add search by date
     method: 'get'
   });
   console.log(response)
   // @ts-ignore
   if (response.data.length === 0) {
-      console.log('This food does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+    console.log('This food does not exist in our records.')
+  } else console.log('Retrieved data: ', response)
 
   return response
 }
@@ -55,10 +55,10 @@ export const getConsumedFoodForUser = async (uID : number,fID : number = 0) => {
  * @param doc date of consumption for enriched verification of rows to be deleted
  * @returns 
  */
-export async function deleteConsumedFood(cfID : number, uID: number, doe: Date) {
-    const res = await $fetch(`/api/consumeFood/query?cfID=${cfID}&uID=${uID}&doe=${doe.toISOString()}`, {
-      method: 'delete',
-    })
-    console.log(res)
-   return res;
+export async function deleteConsumedFood(cfID: number, uID: number, doe: Date) {
+  const res = await $fetch(`/api/consumeFood/query?cfID=${cfID}&uID=${uID}&doe=${doe.toISOString()}`, {
+    method: 'delete',
+  })
+  console.log(res)
+  return res;
 }

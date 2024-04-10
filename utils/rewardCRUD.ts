@@ -26,8 +26,7 @@ export async function updateReward(rewardInfo:Reward) {
         'H-ID' : rewardInfo.hID,
     }
   })
-  console.log(res, 'yup')
-  console.log(rewardInfo, 'helppppp')
+
 }
 
 export const getRewardByID = async (rID : number) => {
