@@ -23,7 +23,8 @@ import type { log } from 'console';
     const createH = ref(false);
 
     const swi = ref(false);
-    
+    const switchHouse = async () => {};
+
     /* 
     FOR FUTURE: ability to switch household
     const switchHouse = async () => {
