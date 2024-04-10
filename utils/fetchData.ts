@@ -1,4 +1,5 @@
 export const householdData = ref();
+export const currentHouse = ref();
 export const userData = ref();
 export const foodData = ref();
 export const rewardsData = ref();
@@ -13,6 +14,11 @@ export const fetchHouseholdData = async () => {
     const response = await $fetch('/api/household/0');
     householdData.value = response
 };
+export const fetchCurrentHouse = async (hID : number) => {
+    const response = await getSpecificHousehold(hID);
+    currentHouse.value = response;
+}
+
 export const fetchUserData = async (hID : number) => {
     const response = await getAllUsersInHousehold(hID); // change this to currently logged in hID using user info on log in
     userData.value = response
@@ -54,6 +60,7 @@ export const refreshData = async (gmail: String) => {
     const firstUser = loggedInUser.value[0]; 
     console.log("First user in loggedInUser.value:",firstUser['User-ID'])
     await fetchHouseholdData()
+    await fetchCurrentHouse(firstUser['H-ID'])
     await fetchUserData(firstUser['H-ID'])
     await fetchFoodData(firstUser['H-ID'])
     await fetchRewardsData(firstUser['H-ID'])

@@ -3,11 +3,12 @@
 import type { ConsumedFood, RedeemedReward } from '~/server/utils/entityTypes';
 import { refreshData, foodData, rewardsData, consumedFoodData, obtainedRewardData } from '../utils/fetchData'
 
-const { data } = useAuth();
-await refreshData(data.value?.user?.email!)
-if(loggedInUser.value == -1) {
-    navigateTo('/login')
-}
+    const { data } = useAuth();
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value == -1) {
+        navigateTo('/register')
+    }
+    await refreshData(data.value?.user?.email!)
 
 // NOTE WITH DATES: JANUARY STARTS AT 0, DECEMBER AT 11
 

@@ -1,5 +1,12 @@
 <script setup lang="ts">
 
+    const { data } = useAuth();
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value == -1) {
+        navigateTo('/register')
+    }
+    await refreshData(data.value?.user?.email!)
+
     const parent = ref(true);
     const houseHold = ref("");
     const houseName = ref("");

@@ -36,7 +36,9 @@
                 return;
             }
     // @ts-ignore
-            householdID.value = await createHousehold(houseName.value.trim()).then(res => res.data).insertId
+            const temp = await createHousehold(houseName.value.trim()).then(res => res.data);
+            householdID.value = temp.insertId;
+            console.log(householdID.value);
         }
         else{
     // @ts-ignore
@@ -83,7 +85,7 @@
             uID: null,
             fName: name.value,
             lName: lName.value,
-            dob: new Date(`${year.value}-${month.value - 1}-${day.value}`),
+            dob: new Date(`${year.value}-${month.value}-${day.value}`),
             pointsEarned: 0,
             googleAuth: userEmail.value!,
             PorCFlag: parent.value ? 1 : 0,
@@ -92,7 +94,8 @@
         
         console.log(validUserToCreate)
     // @ts-ignore
-        validUserToCreate.uID = await createUser(validUserToCreate).then(res => res.data).insertId
+        validUserToCreate.uID = await createUser(validUserToCreate).then(res => res.data).insertId;
+        console.log(validUserToCreate);
         loggedInUser.value = validUserToCreate
         formFeedback.value = 'Form Complete';
         // Then redirect to dashboard
