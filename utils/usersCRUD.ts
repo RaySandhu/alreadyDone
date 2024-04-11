@@ -73,14 +73,22 @@ export const getUserByEmail = async (email : String) => {
 }
 
 export async function updateUserPoints(userInfo:User, pointValue: number) {
+  const numPoints = userInfo['Points earned'] + pointValue
   const res = await $fetch(`/api/users/query?uID=0&hID=0`, {
     method: 'post',
     body: {
-      ...userInfo,
-      'pointsEarned' : userInfo.pointsEarned + pointValue,
+      'uID'           : userInfo['User-ID'],
+      'fName'         : userInfo['Fname'],
+      'lName'         : userInfo['Lname'],
+      'dob'           : userInfo['DOB'],
+      'pointsEarned'  : numPoints,
+      'googleAuth'    : userInfo['Google Auth'],
+      'PorCFlag'      : userInfo['PorC-Flag'],
+      'hID'           : userInfo['H-ID'],
     }
   })
   console.log(res)
+
 }
 
 export async function deleteUser(uID : number) {

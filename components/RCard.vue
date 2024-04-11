@@ -104,7 +104,7 @@ const editReward = async () => {
         console.log("Reward updated:", reward.value);
 
 
-
+        edit.value = false;
         isOpen.value = false;
     } catch (error) {
         console.error("Failed to update reward:", error);
