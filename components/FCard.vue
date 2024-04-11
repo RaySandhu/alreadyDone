@@ -2,7 +2,7 @@
 import type { Food, User } from '~/server/utils/entityTypes';
 // Use: import 1 food from DB connection for this component
 
-type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
+type FormFeedbackType = 'incomplete' | 'success' | 'error' | 'alreadyConsumed' | null;
 
 
 const props = defineProps<{
@@ -16,11 +16,11 @@ const isOpen = ref(false);
 const del = ref(false);
 const edit = ref(false);
 
+
 const name = food.name;
 const pointValue = food.pointValue;
 const formFeedback: Ref<FormFeedbackType> = ref(null);
-
-
+const isObtained = ref()
 const editableFood = ref({} as Food);
 
 
@@ -29,7 +29,19 @@ const logFood = async () => {
     isOpen.value = false;
 
     try {
-        // Create Food object to be passed into consumeFood
+        
+        const consumedResponse = await getConsumedFoodForUser(loggedInUser.value[0]['User-ID'], food.fID);
+        isObtained.value = consumedResponse
+        const alreadyConsumed = isObtained.value.data.some(consumedFood => consumedFood['CFood-ID'] === food.fID);
+        if (alreadyConsumed) {
+
+            console.warn("Food has already been consumed.");
+            formFeedback.value = 'alreadyConsumed';
+
+            isOpen.value = false;
+            return;
+        }
+
         const newFood: Food = {
             fID: food.fID,
             name: food.name,
@@ -93,16 +105,16 @@ const editFood = async () => {
 
         await updateFood(upFood);
         console.log('refresh now')
-        
+
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
 
 
         edit.value = false;
         isOpen.value = false;
-        
+
     } catch (error) {
-        console.error("Failed to update reward:", error);
+        console.error("Failed to update food:", error);
         formFeedback.value = 'error';
     }
 }
@@ -131,6 +143,8 @@ const editFood = async () => {
             <nuxt-icon name="Points" class="text-2xl md:text-3xl text-white mt-1 mr-1" />
             <p class="text-base md:text-lg text-white font-museoModerno"> + {{ food.pointValue }} points </p>
         </button>
+        <!-- If food is already consumed, display red text -->
+        <p v-if="formFeedback === 'alreadyConsumed'" class="text-red-500 text-center">Food has already been consumed</p>
         <p class="text-gray-500 mb-2">{{ food.quantity }} left</p>
     </div>
     <v-dialog v-model="isOpen">
@@ -188,7 +202,8 @@ const editFood = async () => {
                             <p class="font-museoModerno mt-4"> Point Value: </p>
                             <input v-model="editableFood.pointValue" placeholder="10" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Quantity: </p>
-                            <input v-model="editableFood.quantity" type="number" min="0" placeholder="10" class="hover:bg-gray-200 px-2" />
+                            <input v-model="editableFood.quantity" type="number" min="0" placeholder="10"
+                                class="hover:bg-gray-200 px-2" />
                         </form>
                     </div>
                 </v-card-item>

@@ -15,6 +15,7 @@ export async function obtainReward(rewardInfo: Reward, userInfo: User) {
       }
     })
     updateUserPoints(userInfo, -1 * rewardInfo.pointsNeeded) 
+    console.log(res, 'this is the response')
   
 }
 
@@ -34,6 +35,7 @@ export const getObtainedRewardForUser = async (uID : number,orID : number = 0) =
   if (response.data.length === 0) {
       console.log('This reward does not exist in our records.')
   } else console.log('Retrieved data: ',response)
+  console.log(orID, 'orid')
   return response
 }
 
