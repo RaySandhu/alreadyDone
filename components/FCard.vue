@@ -85,7 +85,7 @@ const editFood = async () => {
             fID: food.fID,
             name: editableFood.value.name,
             pointValue: editableFood.value.pointValue,
-            quantity: food.quantity,
+            quantity: editableFood.value.quantity,
             hID: food.hID
         };
 
@@ -187,6 +187,8 @@ const editFood = async () => {
                             <input v-model="editableFood.name" placeholder="bananas" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Point Value: </p>
                             <input v-model="editableFood.pointValue" placeholder="10" class="hover:bg-gray-200 px-2" />
+                            <p class="font-museoModerno mt-4"> Quantity: </p>
+                            <input v-model="editableFood.quantity" type="number" min="0" placeholder="10" class="hover:bg-gray-200 px-2" />
                         </form>
                     </div>
                 </v-card-item>
