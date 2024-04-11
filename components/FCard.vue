@@ -2,30 +2,30 @@
 import type { Food, User } from '~/server/utils/entityTypes';
 // Use: import 1 food from DB connection for this component
 
-type FormFeedbackType = 'incomplete' | 'success' | 'error' | 'alreadyConsumed' | null;
-
-
 const props = defineProps<{
     food: Food,
-    user: User
 }>()
 
+// page data
 const { data } = useAuth();
 const { food } = props;
+
+// model values
 const isOpen = ref(false);
 const del = ref(false);
 const edit = ref(false);
 
-
+// update values
 const name = food.name;
 const pointValue = food.pointValue;
-const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+const formFeedback: Ref<String> = ref("");
 const isObtained = ref()
 const editableFood = ref({} as Food);
 
-
+// log the food item under current user into the database
 const logFood = async () => {
-    formFeedback.value = null;
+    formFeedback.value = "";
     isOpen.value = false;
 
     try {
@@ -50,13 +50,11 @@ const logFood = async () => {
             hID: food.hID
         };
 
-
         await consumeFood(newFood, loggedInUser.value[0]);
 
         // Refresh Data
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
-
 
         // close modal
         isOpen.value = false;
@@ -64,9 +62,9 @@ const logFood = async () => {
         console.error("Failed to consume food:", error);
         formFeedback.value = 'error';
     }
-
 }
 
+// delete food item from database. May change to just throw out in trash.
 const delFood = async () => {
     try {
         const foodToDelID = food.fID
@@ -85,14 +83,12 @@ const delFood = async () => {
     }
 }
 
+// edit the values of the current food item
 const editFood = async () => {
-    formFeedback.value = null;
+    formFeedback.value = "";
     isOpen.value = false;
 
-
-
     try {
-
         const upFood: Food = {
             fID: food.fID,
             name: editableFood.value.name,
@@ -101,14 +97,11 @@ const editFood = async () => {
             hID: food.hID
         };
 
-
-
         await updateFood(upFood);
         console.log('refresh now')
 
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
-
 
         edit.value = false;
         isOpen.value = false;
@@ -118,7 +111,6 @@ const editFood = async () => {
         formFeedback.value = 'error';
     }
 }
-
 </script>
 
 <template>
@@ -131,7 +123,6 @@ const editFood = async () => {
                 @click="edit = true"></v-btn>
             <v-btn class="mx-1 text-blue" variant="text" size="small" density="compact" icon="mdi-delete"
                 @click="del = true"></v-btn>
-
         </div>
         <!-- Food name -->
         <div class="flex justify-center align-center h-2/3">

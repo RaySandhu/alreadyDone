@@ -13,8 +13,6 @@ const pointValue = ref('');
 const quantity = ref('');
 const formFeedback: Ref<FormFeedbackType> = ref(null);
 
-
-
 const submitFood = async () => {
     formFeedback.value = null;
 
@@ -36,8 +34,6 @@ const submitFood = async () => {
         hID: HID,
     };
 
-
-
     try {
 
         await createFood(newFood);
@@ -56,14 +52,7 @@ const submitFood = async () => {
         console.error("Failed to create food:", error);
         formFeedback.value = 'error';
     }
-
-
 };
-
-
-
-
-
 </script>
 
 
@@ -75,7 +64,7 @@ const submitFood = async () => {
         </div>
         <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
             <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="foodItem in foodData.data" :key="foodItem['Food-ID']">
+                <div v-for="foodItem in foodData.data" :key="foodItem.Quantity">
                     <FCard :food="{
                 fID: foodItem['Food-ID'],
                 name: foodItem.Name,

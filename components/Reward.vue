@@ -51,9 +51,6 @@ const submitReward = async () => {
         formFeedback.value = 'error';
     }
 };
-
-
-
 </script>
 
 <template>

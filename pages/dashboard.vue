@@ -9,15 +9,10 @@ import { refreshData, foodData, rewardsData, consumedFoodData, obtainedRewardDat
         navigateTo('/register')
     }
     await refreshData(data.value?.user?.email!)
-
-
 </script>
 
 <template>
     <div class="p-5 bg-gradient-to-b from-bone-50 to-white">
-        <h1 class="font-museoModerno text-lg">
-            Dashboard - Welcome {{ data?.user?.name }}
-        </h1>
         <!-- Panel for logging food/fruits. Admins have button to add and throw out/ delete items -->
         <Food />
 

@@ -3,35 +3,30 @@ import type { Reward, User } from '~/server/utils/entityTypes';
 import { loggedInUser, rewardsData } from '../utils/fetchData';
 // Use: import 1 reward from DB connection for this component
 
-type FormFeedbackType = 'incomplete' | 'success' | 'error' |'alreadyObtained' | null;
-
 const props = defineProps<{
     reward: Reward,
-    user: User
 }>()
 
-
+// reward data
 const { data } = useAuth();
+const reward = computed(() => props.reward);
+
+// model values
 const isOpen = ref(false);
 const del = ref(false);
 const edit = ref(false);
-const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+const formFeedback: Ref<String> = ref("");
 const isRedeemed = ref(false);
 
-
-
-const name = computed(() => props.reward.name);
-const reward = computed(() => props.reward);
 const pointsNeeded = computed(() => props.reward.pointsNeeded);
 const editableReward = ref({} as Reward);
 const isObtained= ref()
 
+// logs the reward under the current user into db
 const logReward = async () => {
-    formFeedback.value = null;
-
+    formFeedback.value = "";
     isOpen.value = false;
-
-
 
     try {
         // Check to see if reward has been previously obtained
@@ -54,15 +49,11 @@ const logReward = async () => {
             status: Number(reward.value.status),
             hID: reward.value.hID
         };
+        await obtainReward(newReward, loggedInUser.value[0]);
 
-
-       await obtainReward(newReward, loggedInUser.value[0]);
-
-   
         // refresh datra
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
-
 
         //Close popup
         isOpen.value = false;
@@ -73,6 +64,7 @@ const logReward = async () => {
     }
 }
 
+// deletes current reward from database
 const delReward = async () => {
     try {
         const rewardToDelID = reward.value.rID
@@ -90,12 +82,11 @@ const delReward = async () => {
     }
 }
 
+// edits reward contents
 const editReward = async () => {
-    formFeedback.value = null;
+    formFeedback.value = "";
     console.log(reward.value.rID, 'rewarddd id');
     isOpen.value = false;
-
-
 
     try {
 
@@ -108,16 +99,12 @@ const editReward = async () => {
             hID: reward.value.hID
         };
 
-
-
-
         await updateReward(upReward);
         console.log(upReward, "Updated Reward Information")
 
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
         console.log("Reward updated:", reward.value);
-
 
         edit.value = false;
         isOpen.value = false;
@@ -126,7 +113,6 @@ const editReward = async () => {
         formFeedback.value = 'error';
     }
 }
-
 </script>
 
 <template>

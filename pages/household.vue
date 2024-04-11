@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import type { log } from 'console';
-
-
     const { data } = useAuth();
 
     await fetchLoggedInUser(data.value?.user?.email!);
@@ -84,7 +82,6 @@ import type { log } from 'console';
         navigateTo('/register')
         console.log("delete household");
     }
-
 </script>
 
 <template>

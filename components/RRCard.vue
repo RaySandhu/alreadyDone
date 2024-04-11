@@ -8,10 +8,9 @@ const props = defineProps<{
 
 const { reward } = props;
 
-
-
-
 // Get reward name, description, point value,...etc. via query
+const rewardInfo = await getRewardByID(reward.redeemID);
+console.log("reward: ", rewardInfo)
 
 </script>
 
@@ -19,15 +18,14 @@ const { reward } = props;
     <!-- component for displaying individual food elements. (fixed width, height to parent container) -->
     <div class="flex flex-col justify-center align-center rounded-lg w-48 md:w-60 h-52 bg-blue-100 text-black m-4 mr-2 md:mr-4 p-1 shadow-lg">
         
-        
         <!-- Food name -->
         <div class="flex flex-col justify-center align-center h-2/3">
-            <h2 class="text-xl text-money-500">Reward ID - {{ reward.redeemID }} </h2>
+            <h2 class="text-xl text-money-500 text-center">{{ rewardInfo.data[0]['Name'] }} </h2>
             <!-- <p class="text-sm text-money-300 text-center p-2">Redeemed reward</p> -->
             <!-- Date added: YYYY-MM-DD -->
             <div class="text-center text-money-300">
-                <!-- <p>Redeemed {{ reward.date.toLocaleDateString() }}</p> -->
-                <!-- <p>For xxx Points</p> -->
+                <p>Redeemed {{ reward.date.split('T')[0] }}</p>
+                <p>For {{ rewardInfo.data[0]['Points needed'] }} Points</p>
             </div>
         </div>
     </div>

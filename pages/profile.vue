@@ -13,45 +13,45 @@ import { loggedInUser } from '~/utils/fetchData';
     const numRewards = obtainedRewardData.value.length || 0;
     const numFood = consumedFoodData.value.length || 0;
 
-   const profilePic = data.value?.user?.image;
-   const name = ref("");
-   name.value = firstUser['Fname'];
-   const lName = ref("");
-   lName.value = firstUser['Lname'];
-   const year: Ref<number | undefined>= ref();
+    const profilePic = data.value?.user?.image;
+    const name = ref("");
+    name.value = firstUser['Fname'];
+    const lName = ref("");
+    lName.value = firstUser['Lname'];
+    const year: Ref<number | undefined>= ref();
     year.value = firstUser["DOB"].split('-')[0];
     const month: Ref<number | undefined> = ref();
     month.value = firstUser["DOB"].split('-')[1];
     const day: Ref<number | undefined> = ref();
     day.value = firstUser["DOB"].split('-')[2].split('T')[0];
 
-   const del = ref(false);
-   const delUser = async () => {
-        del.value = false;
-        deleteUser(firstUser['User-ID']);
-        navigateTo('/register');
-   };
+    const del = ref(false);
+    const delUser = async () => {
+            del.value = false;
+            deleteUser(firstUser['User-ID']);
+            navigateTo('/register');
+    };
 
-   const swi = ref(false);
-   const switchUser = async () => {
-        swi.value = false;
-        const porc = firstUser['PorC-Flag'] == "P";
-        const tempUpdate : User = {
-            uID: firstUser['User-ID'],
-            fName: firstUser['Fname'],
-            lName: firstUser['Lname'],
-            dob: firstUser['DOB'],
-            pointsEarned: firstUser['Points earned'],
-            googleAuth: firstUser['googleAuth'],
-            PorCFlag: porc ? 0 : 1,
-            hID: firstUser['H-ID']
-        }
-        updateUser(tempUpdate);
-        firstUser['PorC-Flag'] = porc ? "":"P";
-   }
+    const swi = ref(false);
+    const switchUser = async () => {
+            swi.value = false;
+            const porc = firstUser['PorC-Flag'] == "P";
+            const tempUpdate : User = {
+                uID: firstUser['User-ID'],
+                fName: firstUser['Fname'],
+                lName: firstUser['Lname'],
+                dob: firstUser['DOB'],
+                pointsEarned: firstUser['Points earned'],
+                googleAuth: firstUser['googleAuth'],
+                PorCFlag: porc ? 0 : 1,
+                hID: firstUser['H-ID']
+            }
+            updateUser(tempUpdate);
+            firstUser['PorC-Flag'] = porc ? "":"P";
+    }
 
-   const editProfile = ref(false);
-   const edit = async () => {
+    const editProfile = ref(false);
+    const edit = async () => {
         editProfile.value = false;
         const tempUpdate : User = {
             uID: firstUser['User-ID'],
@@ -66,12 +66,12 @@ import { loggedInUser } from '~/utils/fetchData';
         updateUser(tempUpdate);
         firstUser['Fname'] = tempUpdate.fName;
         firstUser['Lname'] = tempUpdate.lName;
-        //firstUser['DOB'] = tempUpdate.dob.toLocaleDateString;
+        tempUpdate.dob.setDate(tempUpdate.dob.getDate()+1);
+        firstUser['DOB'] = tempUpdate.dob.toLocaleDateString();
     }
-
 </script>
 
-<template>
+<template :key="firstUser">
     <div class="bg-gradient-to-b from-bone-100 to-white p-5 flex flex-col">
         <div class="flex flex-row align-center mt-4">
             <h1 class="font-museoModerno text-blue text-3xl">
@@ -104,18 +104,18 @@ import { loggedInUser } from '~/utils/fetchData';
             <h1>
                 Household: {{ HName }}
             </h1>
-            <!-- Number of points -->
+            <!-- Number of points
             <h1>
                 Number of points aquired by user: {{  firstUser['Points earned'] }}
-            </h1>
-            <!-- Number of rewards redeemed -->
+            </h1> -->
+            <!-- Number of rewards redeemed
             <h1>
                 Lifetime rewards redeemed: {{ numRewards }}
-            </h1>
-            <!-- Number of food items logged -->
+            </h1> -->
+            <!-- Number of food items logged 
             <h1>
                 Lifetime foods logged: {{ numFood }}
-            </h1>
+            </h1> -->
         </div>
         <div class="mt-10 w-full flex flex-col">
             <!-- Button to change from child to adult (or vice versa) -->
