@@ -34,8 +34,7 @@ export const getObtainedRewardForUser = async (uID : number,orID : number = 0) =
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This reward does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
-  console.log(orID, 'orid')
+  } else console.log('Obtained reward data: ',response)
   return response
 }
 

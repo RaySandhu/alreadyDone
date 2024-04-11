@@ -42,7 +42,7 @@ export const getAllUsersInHousehold = async (hID : number) => {
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This user does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Household Users data: ',response)
   return response
 }
 
@@ -63,12 +63,11 @@ export const getUserByEmail = async (email : String) => {
   const response = await $fetch(`/api/users/query?email=${email}&hID=0`, {
     method: 'get'
   });
-  console.log(response)
   // @ts-ignore
   // if (response.data.length === 0) {
   //     console.log('This user does not exist in our records.')
   // } else 
-  console.log('Retrieved data: ',response)
+  console.log('Current User: ',response)
   return response
 }
 

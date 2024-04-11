@@ -49,7 +49,7 @@ export const getAllRewardsInHousehold = async (hID : number) => {
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This reward does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Household rewards data: ',response)
   return response
 }
 

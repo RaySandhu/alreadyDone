@@ -33,7 +33,7 @@ export const getAllFoodInHousehold = async (hID : number) => {
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('No food exists in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Household food data: ',response)
   return response
 }
 
