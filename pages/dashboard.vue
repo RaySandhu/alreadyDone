@@ -3,11 +3,12 @@
 import type { ConsumedFood, RedeemedReward } from '~/server/utils/entityTypes';
 import { refreshData, foodData, rewardsData, consumedFoodData, obtainedRewardData } from '../utils/fetchData'
 
-const { data } = useAuth();
-await refreshData(data.value?.user?.email!)
-if (loggedInUser.value == -1) {
-    navigateTo('/login')
-}
+    const { data } = useAuth();
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value == -1) {
+        navigateTo('/register')
+    }
+    await refreshData(data.value?.user?.email!)
 
 
 </script>
@@ -17,7 +18,6 @@ if (loggedInUser.value == -1) {
         <h1 class="font-museoModerno text-lg">
             Dashboard - Welcome {{ data?.user?.name }}
         </h1>
-        <v-btn @click="printUser()">Get LoggedInUser</v-btn>
         <!-- Panel for logging food/fruits. Admins have button to add and throw out/ delete items -->
         <Food />
 

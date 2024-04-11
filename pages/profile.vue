@@ -1,29 +1,72 @@
 <script setup lang="ts">
-   const { data } = useAuth();
+import { loggedInUser } from '~/utils/fetchData';
+
+    const { data } = useAuth();
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value == -1) {
+        navigateTo('/register')
+    }
+    await refreshData(data.value?.user?.email!)
+
+    const firstUser = loggedInUser.value[0];
+    const HName = currentHouse.value.data[0].Name;
+    const numRewards = obtainedRewardData.value.length || 0;
+    const numFood = consumedFoodData.value.length || 0;
 
    const profilePic = data.value?.user?.image;
    const name = ref("");
+   name.value = firstUser['Fname'];
    const lName = ref("");
-   const birthday = ref("");
+   lName.value = firstUser['Lname'];
+   const year: Ref<number | undefined>= ref();
+    year.value = firstUser["DOB"].split('-')[0];
+    const month: Ref<number | undefined> = ref();
+    month.value = firstUser["DOB"].split('-')[1];
+    const day: Ref<number | undefined> = ref();
+    day.value = firstUser["DOB"].split('-')[2].split('T')[0];
 
    const del = ref(false);
    const delUser = async () => {
         del.value = false;
-        console.log("delete user");
+        deleteUser(firstUser['User-ID']);
+        navigateTo('/register');
    };
 
    const swi = ref(false);
    const switchUser = async () => {
         swi.value = false;
-        console.log("switch user to child/parent");
-    
+        const porc = firstUser['PorC-Flag'] == "P";
+        const tempUpdate : User = {
+            uID: firstUser['User-ID'],
+            fName: firstUser['Fname'],
+            lName: firstUser['Lname'],
+            dob: firstUser['DOB'],
+            pointsEarned: firstUser['Points earned'],
+            googleAuth: firstUser['googleAuth'],
+            PorCFlag: porc ? 0 : 1,
+            hID: firstUser['H-ID']
+        }
+        updateUser(tempUpdate);
+        firstUser['PorC-Flag'] = porc ? "":"P";
    }
 
    const editProfile = ref(false);
    const edit = async () => {
         editProfile.value = false;
-        console.log("edit something");
-        console.log(profilePic);
+        const tempUpdate : User = {
+            uID: firstUser['User-ID'],
+            fName: name.value,
+            lName: lName.value,
+            dob: new Date(`${year.value}-${month.value}-${day.value}`),
+            pointsEarned: firstUser['Points earned'],
+            googleAuth: firstUser['googleAuth'],
+            PorCFlag: firstUser['PorC-Flag'],
+            hID: firstUser['H-ID']
+        }
+        updateUser(tempUpdate);
+        firstUser['Fname'] = tempUpdate.fName;
+        firstUser['Lname'] = tempUpdate.lName;
+        //firstUser['DOB'] = tempUpdate.dob.toLocaleDateString;
     }
 
 </script>
@@ -40,35 +83,38 @@
         <div class="mb-5 h-1 w-full bg-amour-200 shadow-md rounded-lg"></div>
         <!-- Profile picture from google auth can go here (Name beside it)-->
         <div class="my-4 flex flex-row align-center">
-            <img class="h-12 align-self-start mr-5 img-thumbnail rounded-circle" :src="profilePic" alt="Profile pic">
+            <img class="h-12 align-self-start mr-5 img-thumbnail rounded-circle" :src="profilePic!" alt="Profile pic">
             <h2 class="font-museoModerno text-amour-300 text-2xl">
-                User Name
+                {{ firstUser['Fname'] }} {{ firstUser['Lname'] }}
             </h2>
         </div>
         <div class="font-museoModerno text-blue text-xl">
             <!-- Adult vs Child status -->
-            <h1>
-                (Parent/Child) User
+            <h1 v-if="firstUser['PorC-Flag'] == 'P'">
+                Parent User
+            </h1>
+            <h1 v-if="firstUser['PorC-Flag'] == ''">
+                Child User
             </h1>
             <!-- Birth date -->
             <h1>
-                Birthdate
+                Birthdate: {{firstUser["DOB"].split('T')[0]}}
             </h1>
             <!-- House hold -->
             <h1>
-                Household
+                Household: {{ HName }}
             </h1>
             <!-- Number of points -->
             <h1>
-                Number of points aquired by user
+                Number of points aquired by user: {{  firstUser['Points earned'] }}
             </h1>
             <!-- Number of rewards redeemed -->
             <h1>
-                Lifetime rewards redeemed:
+                Lifetime rewards redeemed: {{ numRewards }}
             </h1>
             <!-- Number of food items logged -->
             <h1>
-                Lifetime foods logged: 
+                Lifetime foods logged: {{ numFood }}
             </h1>
         </div>
         <div class="mt-10 w-full flex flex-col">
@@ -93,7 +139,11 @@
                                 <p class="font-museoModerno mt-4"> Last Name: </p>
                                 <input v-model="lName" placeholder="Doe" class="hover:bg-gray-200 px-2"/>
                                 <p class="font-museoModerno mt-4"> Birthdate (YYYY/MM/DD): </p>
-                                <input v-model="birthday" placeholder="YYYY/MM/DD" class="hover:bg-gray-200 px-2"/>
+                                <div class="flex flex-row mx-auto">
+                                    <input v-model="year" placeholder="YYYY" class="hover:bg-gray-200 w-20 px-2"/>
+                                    <input v-model="month" placeholder="MM" class="hover:bg-gray-200 w-12 px-2"/>
+                                    <input v-model="day" placeholder="DD" class="hover:bg-gray-200 w-12 px-2"/>
+                                </div>
                             </form>
                         </div>
                     </v-card-item>
