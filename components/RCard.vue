@@ -3,7 +3,7 @@ import type { Reward, User } from '~/server/utils/entityTypes';
 import { loggedInUser, rewardsData } from '../utils/fetchData';
 // Use: import 1 reward from DB connection for this component
 
-type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
+type FormFeedbackType = 'incomplete' | 'success' | 'error' |'alreadyObtained' | null;
 
 const props = defineProps<{
     reward: Reward,
@@ -16,13 +16,15 @@ const isOpen = ref(false);
 const del = ref(false);
 const edit = ref(false);
 const formFeedback: Ref<FormFeedbackType> = ref(null);
+const isRedeemed = ref(false);
+
 
 
 const name = computed(() => props.reward.name);
 const reward = computed(() => props.reward);
 const pointsNeeded = computed(() => props.reward.pointsNeeded);
 const editableReward = ref({} as Reward);
-
+const isObtained= ref()
 
 const logReward = async () => {
     formFeedback.value = null;
@@ -32,6 +34,17 @@ const logReward = async () => {
 
 
     try {
+        // Check to see if reward has been previously obtained
+        const consumedResponse = await getObtainedRewardForUser(loggedInUser.value[0]['User-ID'], reward.value.rID);
+        isObtained.value = consumedResponse
+        const alreadyObtained = isObtained.value.data.some(obtainReward => obtainReward['ReedemID'] === reward.value.rID);
+        if (alreadyObtained) {
+            // if it has been obtained, warn user and print message
+            console.warn("Food has already been consumed.");
+            formFeedback.value = 'alreadyObtained'; 
+            isOpen.value = false; 
+            return; 
+        }
         //create Reward object to be passed into obtainReward
         const newReward: Reward = {
             rID: reward.value.rID,
@@ -43,15 +56,17 @@ const logReward = async () => {
         };
 
 
-        await obtainReward(newReward, loggedInUser.value[0]);
+       await obtainReward(newReward, loggedInUser.value[0]);
 
+   
         // refresh datra
         await refreshData(data.value?.user?.email!)
         formFeedback.value = 'success';
 
 
-        // Optionally reset state or close modal
+        //Close popup
         isOpen.value = false;
+        isRedeemed.value = true;
     } catch (error) {
         console.error("Failed to log reward:", error);
         formFeedback.value = 'error';
@@ -137,6 +152,8 @@ const editReward = async () => {
             <nuxt-icon name="Points" class="text-2xl md:text-3xl text-white mt-1 mr-1" />
             <p class="text-base md:text-lg text-white font-museoModerno"> - {{ reward.pointsNeeded }} points </p>
         </button>
+        <!-- If Reward is already obtained, display red text -->
+        <p v-if="formFeedback === 'alreadyObtained'" class="text-red-500 text-center">Reward has already been obtained</p>
     </div>
     <v-dialog v-model="isOpen">
         <div class="flex justify-center align-center">

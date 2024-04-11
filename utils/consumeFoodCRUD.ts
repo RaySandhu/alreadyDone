@@ -43,7 +43,7 @@ export const getConsumedFoodForUser = async (uID: number, fID: number = 0) => {
   if (response.data.length === 0) {
     console.log('This food does not exist in our records.')
   } else console.log('Retrieved data: ', response)
-
+  console.log(fID)
   return response
 }
 
