@@ -9,7 +9,7 @@
 
     const firstUser = loggedInUser.value[0];
     const HName = currentHouse.value.data[0].Name;
-    const numRewards = obtainedRewardData.value.length || 0;
+    const numRewards = obtainedRewardData.value.data.length || 0;
 
 </script>
 
