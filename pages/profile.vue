@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { loggedInUser } from '~/utils/fetchData';
 
-    const { data } = useAuth();
+    const { data, signOut } = useAuth();
     await fetchLoggedInUser(data.value?.user?.email!);
     if(loggedInUser.value == -1) {
         navigateTo('/register')
@@ -29,6 +29,7 @@ import { loggedInUser } from '~/utils/fetchData';
     const delUser = async () => {
             del.value = false;
             deleteUser(firstUser['User-ID']);
+            signOut();
             navigateTo('/register');
     };
 
