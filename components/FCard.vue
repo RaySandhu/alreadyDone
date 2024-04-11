@@ -16,8 +16,7 @@ const del = ref(false);
 const edit = ref(false);
 
 // update values
-const name = food.name;
-const pointValue = food.pointValue;
+const parent = ref(loggedInUser.value[0]['PorC-Flag'] == 'P');
 
 const formFeedback: Ref<String> = ref("");
 const isObtained = ref()
@@ -119,9 +118,9 @@ const editFood = async () => {
         class="flex flex-col justify-center align-center rounded-lg w-48 md:w-60 h-52 bg-blue-100 text-black m-4 mr-2 md:mr-4 p-1 shadow-lg">
         <!-- delete/throw out button in top right corner only for parents -->
         <div class="mr-2 ml-auto">
-            <v-btn class="mx-1 text-blue" variant="text" size="small" density="compact" icon="mdi-pencil"
+            <v-btn v-if="parent" class="mx-1 text-blue" variant="text" size="small" density="compact" icon="mdi-pencil"
                 @click="edit = true"></v-btn>
-            <v-btn class="mx-1 text-blue" variant="text" size="small" density="compact" icon="mdi-delete"
+            <v-btn v-if="parent" class="mx-1 text-blue" variant="text" size="small" density="compact" icon="mdi-delete"
                 @click="del = true"></v-btn>
         </div>
         <!-- Food name -->

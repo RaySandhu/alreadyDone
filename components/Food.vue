@@ -11,6 +11,8 @@ const addFood = ref(false);
 const name = ref('');
 const pointValue = ref('');
 const quantity = ref('');
+
+const parent = ref(loggedInUser.value[0]['PorC-Flag'] == 'P');
 const formFeedback: Ref<FormFeedbackType> = ref(null);
 
 const submitFood = async () => {
@@ -60,7 +62,7 @@ const submitFood = async () => {
     <div class="my-8 w-full shadow-xl">
         <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
             <h1 class="font-museoModerno">Log Food</h1>
-            <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addFood = true"></v-btn>
+            <v-btn v-if="parent" class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addFood = true"></v-btn>
         </div>
         <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
             <div class="flex flex-row overflow-y-auto mx-2">
