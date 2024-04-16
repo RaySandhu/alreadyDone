@@ -17,7 +17,7 @@ export const getSpecificHousehold = async (id : number) => {
     if (response.data.length === 0) {
         console.log('This household does not exist in our records.')
         return -1
-    } else console.log('Retrieved data: ',response)
+    } else console.log('Household data: ',response)
     return response
 }
 

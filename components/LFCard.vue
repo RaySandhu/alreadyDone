@@ -8,7 +8,9 @@ const props = defineProps<{
 
 const { food } = props;
 
-// Get food name, point value,...etc. via query
+// Consumed food does not have a name value, can query to the orginal food if nessecary?
+const foodInfo = await getFoodByID(food.cFoodID);
+console.log("Food \n", foodInfo);
 
 </script>
 
@@ -16,14 +18,13 @@ const { food } = props;
     <!-- component for displaying individual food elements. (fixed width, height to parent container) -->
     <div class="flex flex-col justify-center align-center rounded-lg w-48 md:w-60 h-52 bg-blue-100 text-black m-4 mr-2 md:mr-4 p-1 shadow-lg">
         
-        
         <!-- Food name -->
         <div class="flex flex-col justify-center align-center h-2/3">
-            <h2 class="text-xl text-money-500">{{ food.cFoodID }} - Food Name</h2>
+            <h2 class="text-xl text-money-500">{{ foodInfo.data[0]['Name'] }} </h2>
             <!-- Date added: YYYY-MM-DD -->
             <div class="text-center text-money-300">
-                <p>Redeemed {{ food.dateOfConsumption.toLocaleDateString() }}</p>
-                <p>For xxx Points</p>
+                <p>Redeemed {{ food.dateOfConsumption.split('T')[0] }}</p>
+                <p>For {{ foodInfo.data[0]['Point value'] }} Points</p>
             </div>
         </div>
     </div>

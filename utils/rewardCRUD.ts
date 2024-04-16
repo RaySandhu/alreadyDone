@@ -3,12 +3,12 @@ export async function createReward(rewardInfo: Reward) {
     const res = await $fetch('/api/reward/create', {
       method: 'post',
       body: {
-        'R-ID' : null,           // need to run a check to see if reward already exists
-        'Name' : rewardInfo.name,
-        'Points needed' : rewardInfo.pointsNeeded,
-        'Description' : rewardInfo.description,
-        'Status' : rewardInfo.status,
-        'H-ID' : rewardInfo.hID,
+        'rID' : null,           // need to run a check to see if reward already exists
+        'name' : rewardInfo.name,
+        'pointsNeeded' : rewardInfo.pointsNeeded,
+        'description' : rewardInfo.description,
+        'status' : rewardInfo.status,
+        'hID' : rewardInfo.hID,
       }
     })
     console.log(res)
@@ -18,15 +18,15 @@ export async function updateReward(rewardInfo:Reward) {
   const res = await $fetch(`/api/reward/query?rID=0&hID=0`, {
     method: 'post',
     body: {
-        'R-ID' : rewardInfo.rID,
-        'Name' : rewardInfo.name,
-        'Points needed' : rewardInfo.pointsNeeded,
-        'Description' : rewardInfo.description,
-        'Status' : rewardInfo.status,
-        'H-ID' : rewardInfo.hID,
+        'rID' : rewardInfo.rID,
+        'name' : rewardInfo.name,
+        'pointsNeeded' : rewardInfo.pointsNeeded,
+        'description' : rewardInfo.description,
+        'status' : rewardInfo.status,
+        'hID' : rewardInfo.hID,
     }
   })
-  console.log(res)
+
 }
 
 export const getRewardByID = async (rID : number) => {
@@ -49,7 +49,7 @@ export const getAllRewardsInHousehold = async (hID : number) => {
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This reward does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Household rewards data: ',response)
   return response
 }
 

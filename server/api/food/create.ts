@@ -1,14 +1,16 @@
 async function createFood(food: Food) {
     const connection = await dbConnect();
+
     try {
-        
+      
+ 
         const [results] = await connection.execute(
             'INSERT INTO Food VALUES (NULL,?,?,?,?)',
             [
-              food['name'],
-              food["pointValue"], 
+              food.name,
+              food.pointValue, 
               food.quantity, 
-              food["hID"]
+              food.hID
             ]
         );
       return results;

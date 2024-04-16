@@ -113,10 +113,11 @@
 // calling this at the start of our application can cache all the data we will query to make things faster.
 const { data } = useAuth();
 
-await refreshData(data.value?.user?.email!)
-if(loggedInUser.value == -1) {
-    navigateTo('/login')
-}
+    await fetchLoggedInUser(data.value?.user?.email!);
+    if(loggedInUser.value == -1) {
+        navigateTo('/register')
+    }
+    await refreshData(data.value?.user?.email!)
 
 const testCreateReward : Reward = {
     'rID' : null,

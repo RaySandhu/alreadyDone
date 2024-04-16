@@ -1,70 +1,77 @@
 <script setup lang="ts">
 import type { Reward } from '~/server/utils/entityTypes';
+import { loggedInUser, rewardsData } from '../utils/fetchData';
 
 
-    type FormFeedbackType = 'incomplete' | 'success' | null;
+type FormFeedbackType = 'incomplete' | 'success' | 'error' | null;
 
-    const { data } = useAuth();
-    
-    const addReward = ref(false);
-    const name = ref('');
-    const pointsNeeded = ref('');
-    const description = ref('');
-    const status = ref('')
-    const formFeedback: Ref<FormFeedbackType> = ref(null);
-    
-    let newReward:Reward = {
-        'rID' : null,
-        'name' : name.value,
-        'pointsNeeded' : Number(pointsNeeded.value),
-        'description' : description.value,
-        'status' : Number(status.value),
-        'hID' : 1,
+const { data } = useAuth();
+
+const addReward = ref(false);
+const name = ref('');
+const pointsNeeded = ref('');
+const description = ref('');
+const status = ref('')
+
+const parent = ref(loggedInUser.value[0]['PorC-Flag'] == 'P');
+const formFeedback: Ref<FormFeedbackType> = ref(null);
+
+const firstUser = loggedInUser.value[0];
+const HID = firstUser['H-ID'];
+
+const submitReward = async () => {
+    formFeedback.value = null;
+
+    if (!name.value.trim() || !pointsNeeded.value.trim() || !description.value.trim()) {
+        formFeedback.value = 'incomplete';
+        return;
     }
-    const submitReward = async () => {
-        formFeedback.value= null;
 
-        if(!name.value.trim() || !pointsNeeded.value.trim() || !description.value.trim() || !status.value.trim()){
-            formFeedback.value = 'incomplete';
-            return;
-        }
+    //create reward object to be passed into create reward
+    const newReward: Reward = {
+        rID: null,
+        name: name.value,
+        pointsNeeded: Number(pointsNeeded.value),
+        description: description.value,
+        status: Number(status.value), // Adjust based on your status field type
+        hID: HID,
+    };
 
-        formFeedback.value = 'success'
-
+    try {
+        await createReward(newReward);
+        await refreshData(data.value?.user?.email!)
+        formFeedback.value = 'success';
+        // Clear the form
+        name.value = '';
+        pointsNeeded.value = '';
+        description.value = '';
+        status.value = '';
         addReward.value = false;
-        console.log(newReward);
+        console.log("Reward created successfully:", newReward);
+    } catch (error) {
+        console.error("Failed to create reward:", error);
+        formFeedback.value = 'error';
     }
-
-    let tempRewards:Reward = [
-        {
-            'rID' : 1,
-            'name' : "Movie",
-            'pointsNeeded' : 500,
-            'description' : "Redeemable for 1 movie trip.",
-            'status' : 0,
-            'hID' : 1,
-        },{
-            'rID' : 2,
-            'name' : "Chocolate Bar",
-            'pointsNeeded' : 50,
-            'description' : "Redeemable for one chocolate bar to eat.",
-            'status' : 0,
-            'hID' : 1,
-        }
-    ]
-
+};
 </script>
 
 <template>
     <div class="my-8 w-full shadow-xl">
-        <div class = "flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
+        <div class="flex align-center px-2 bg-blue-300 h-10 rounded-tl-lg rounded-tr-lg">
             <h1 class="font-museoModerno">Rewards</h1>
-            <v-btn class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
+            <v-btn v-if="parent" class="ml-auto" size="small" density="compact" icon="mdi-plus" @click="addReward = true"></v-btn>
         </div>
-        <div  class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
+        <div class="bg-blue h-64 w-full rounded-bl-lg rounded-br-lg">
             <div class="flex flex-row overflow-y-auto mx-2">
-                <div v-for="tempReward in tempRewards">
-                    <RCard :reward="tempReward" />
+                <div v-for="rewardItem in rewardsData.data" :key="rewardItem['Reward-ID']">
+                    <RCard :reward="{
+                rID: rewardItem['R-ID'],
+                name: rewardItem.Name,
+                pointsNeeded: rewardItem['Points needed'],
+                description: rewardItem.Description,
+                status: rewardItem.Status,
+                hID: rewardItem['H-ID']
+            }" />
                 </div>
             </div>
         </div>
@@ -79,11 +86,12 @@ import type { Reward } from '~/server/utils/entityTypes';
                         <div class="h-1 w-full my-2 bg-money-100"></div>
                         <form class="flex flex-col">
                             <p class="font-museoModerno mt-4"> Reward Name: </p>
-                            <input v-model="name" placeholder="movie" class="hover:bg-gray-200 px-2"/>
+                            <input v-model="name" placeholder="movie" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Point Value: </p>
-                            <input v-model="pointsNeeded" placeholder="100" class="hover:bg-gray-200 px-2"/>
+                            <input v-model="pointsNeeded" placeholder="100" class="hover:bg-gray-200 px-2" />
                             <p class="font-museoModerno mt-4"> Description: </p>
-                            <textarea v-model="description" placeholder="description here" class="hover:bg-gray-200 px-2"></textarea>
+                            <textarea v-model="description" placeholder="description here"
+                                class="hover:bg-gray-200 px-2"></textarea>
                         </form>
                     </div>
                 </v-card-item>

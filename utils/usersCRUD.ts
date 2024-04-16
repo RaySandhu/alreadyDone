@@ -42,7 +42,7 @@ export const getAllUsersInHousehold = async (hID : number) => {
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This user does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Household Users data: ',response)
   return response
 }
 
@@ -63,24 +63,31 @@ export const getUserByEmail = async (email : String) => {
   const response = await $fetch(`/api/users/query?email=${email}&hID=0`, {
     method: 'get'
   });
-  console.log(response)
   // @ts-ignore
   // if (response.data.length === 0) {
   //     console.log('This user does not exist in our records.')
   // } else 
-  console.log('Retrieved data: ',response)
+  console.log('Current User: ',response)
   return response
 }
 
 export async function updateUserPoints(userInfo:User, pointValue: number) {
+  const numPoints = userInfo['Points earned'] + pointValue
   const res = await $fetch(`/api/users/query?uID=0&hID=0`, {
     method: 'post',
     body: {
-      ...userInfo,
-      'Points earned' : userInfo.pointsEarned + pointValue,
+      'uID'           : userInfo['User-ID'],
+      'fName'         : userInfo['Fname'],
+      'lName'         : userInfo['Lname'],
+      'dob'           : userInfo['DOB'],
+      'pointsEarned'  : numPoints,
+      'googleAuth'    : userInfo['Google Auth'],
+      'PorCFlag'      : userInfo['PorC-Flag'],
+      'hID'           : userInfo['H-ID'],
     }
   })
   console.log(res)
+
 }
 
 export async function deleteUser(uID : number) {

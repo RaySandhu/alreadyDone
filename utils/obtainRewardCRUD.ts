@@ -11,12 +11,12 @@ export async function obtainReward(rewardInfo: Reward, userInfo: User) {
       body: {
         'redeemID' : rewardInfo.rID,
         'date' : new Date(),
-        'uID' : userInfo.uID,
+        'uID' : userInfo['User-ID'],
       }
     })
     updateUserPoints(userInfo, -1 * rewardInfo.pointsNeeded) 
+    console.log(res, 'this is the response')
   
-    console.log(res)
 }
 
 /**
@@ -34,7 +34,7 @@ export const getObtainedRewardForUser = async (uID : number,orID : number = 0) =
   // @ts-ignore
   if (response.data.length === 0) {
       console.log('This reward does not exist in our records.')
-  } else console.log('Retrieved data: ',response)
+  } else console.log('Obtained reward data: ',response)
   return response
 }
 
