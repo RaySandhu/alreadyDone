@@ -40,12 +40,14 @@ npm install
 
 Create a `.env` file in both the main directory with the necessary environment variables.
 
+```
 DB_HOST = ______
 DB_USER = ______
 DB_PASSWORD = ______
 DB_NAME = ______
 GOOGLE_CLIENT_SECRET = ______
 GOOGLE_CLIENT_ID = ______
+```
 
 For more detail on how to set up a google OAuth for the application, look at: https://developers.google.com/identity/protocols/oauth2
 
