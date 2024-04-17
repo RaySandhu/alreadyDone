@@ -31,34 +31,41 @@ cd already-done
 2. **Install dependencies:**
 
 ```bash
-# For the frontend
-cd frontend
-npm install
 
-# For the backend
-# TODO: Build a backend
+npm install
 
 ```
 
 3. **Set up the environment:**
 
-Create a `.env` file in both the `frontend` and `backend` directories with the necessary environment variables.
+Create a `.env` file in both the main directory with the necessary environment variables.
+
+DB_HOST = ______
+DB_USER = ______
+DB_PASSWORD = ______
+DB_NAME = ______
+GOOGLE_CLIENT_SECRET = ______
+GOOGLE_CLIENT_ID = ______
+
+For more detail on how to set up a google OAuth for the application, look at: https://developers.google.com/identity/protocols/oauth2
+
+To set up the database schema, run the script found in Already-Done-Schema.sql found in the source files.
 
 4. **Run the applications:**
 
 ```bash
-# For the frontend
+
 npm run dev
 
-# For the backend
-# TODO: Build a backend
 ```
 
-Now, navigate to `http://localhost:3000` in your browser to see the app in action! 🌟
+Now, navigate to `http://localhost:3000/login` in your browser to see the app in action! 🌟
 
 ## Contact
 
 Ray Sandhu - aryamansandhu123@gmail.com
+Emily Kiddle - ekkiddle@gmail.com
+Jaimie Marchuk - jaimie.marchuk@gmail.com
 
 Project Link: [https://github.com/your-repo/already-done](https://github.com/your-repo/already-done)
 
